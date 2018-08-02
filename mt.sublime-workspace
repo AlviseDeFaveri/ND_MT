@@ -1,0 +1,553 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"mov",
+				"mov_char"
+			],
+			[
+				"state2",
+				"state2_id"
+			],
+			[
+				"stat1",
+				"state1_id"
+			],
+			[
+				"Ta",
+				"Tape_cell"
+			],
+			[
+				"tran",
+				"transitions"
+			],
+			[
+				"st",
+				"state"
+			],
+			[
+				"cu",
+				"curCell"
+			],
+			[
+				"n",
+				"next"
+			],
+			[
+				"next",
+				"nextCell"
+			],
+			[
+				"ne",
+				"nextCell"
+			],
+			[
+				"Stat",
+				"Status"
+			],
+			[
+				"siz",
+				"size_t"
+			],
+			[
+				"mavl",
+				"mavlink_message_t"
+			],
+			[
+				"ch",
+				"char"
+			],
+			[
+				"register",
+				"registerComponent"
+			],
+			[
+				"Status",
+				"StatusManager"
+			],
+			[
+				"ret",
+				"retrievedEntry"
+			],
+			[
+				"msg",
+				"msgEntry"
+			],
+			[
+				"def",
+				"defaultHandler"
+			],
+			[
+				"default",
+				"defaultHandler"
+			],
+			[
+				"TMTC",
+				"TMTC_TRACE"
+			],
+			[
+				"buffe",
+				"buffer_msg"
+			],
+			[
+				"occupied",
+				"occupiedSize"
+			],
+			[
+				"str",
+				"structArray"
+			],
+			[
+				"inc",
+				"include"
+			],
+			[
+				"en",
+				"enqueueMsg"
+			],
+			[
+				"out",
+				"outBuffer"
+			],
+			[
+				"occu",
+				"occupiedSize"
+			],
+			[
+				"oc",
+				"occupiedSize"
+			],
+			[
+				"in",
+				"include"
+			],
+			[
+				"message",
+				"message_t"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "mt.c",
+			"settings":
+			{
+				"buffer_size": 3732,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "in.txt",
+			"settings":
+			{
+				"buffer_size": 98,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/C/Users/Elvis/AppData/Roaming/Sublime Text 3/Packages/User/gcc_api_build.sublime-build",
+			"settings":
+			{
+				"buffer_size": 577,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "Packages/User/gcc_api_build.sublime-build",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/User/gcc_api_build.sublime-build",
+					""
+				],
+				[
+					"Packages/User/gcc_api_build.sublime-build",
+					"Run"
+				]
+			],
+			[
+				"Packages/User/gcc_api_build.sublime-build",
+				""
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"vmen",
+				"View: Toggle Menu"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 412.0
+	},
+	"console":
+	{
+		"height": 143.0,
+		"history":
+		[
+			"vmen",
+			"ls"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/C/Users/Elvis/Desktop/uni/API/progetto_2018"
+	],
+	"file_history":
+	[
+		"/C/Users/Elvis/Desktop/uni/API/progetto_2018/mt.sublime-project",
+		"/C/Users/Elvis/Desktop/uni/API/progetto_2018/mt.c",
+		"/C/Users/Elvis/AppData/Roaming/Sublime Text 3/Packages/User/gcc_api_build.sublime-build",
+		"/C/Users/Elvis/Desktop/uni/Algoritmi (barenghi)/progetto 2018/mttypes.h",
+		"/C/Users/Elvis/Desktop/uni/Algoritmi (barenghi)/progetto 2018/mtparser.h",
+		"/C/Users/Elvis/Desktop/uni/Algoritmi (barenghi)/progetto 2018/mt.c",
+		"/C/Users/Elvis/AppData/Roaming/Sublime Text 3/Packages/User/clang_format_custom.sublime-settings",
+		"/C/Users/Elvis/Desktop/uni/Algoritmi (barenghi)/progetto 2018/README.md",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/sbs.conf",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/entrypoints/serials-led-test.cpp",
+		"/C/Users/Elvis/Desktop/SKWRD/gs-mav-serial.cpp",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore.wiki/Mavlink.md",
+		"/C/Users/Elvis/Desktop/SKWRD/SkyNcursesTest/TestSeriale.c",
+		"/C/Users/Elvis/Desktop/SKWRD/SkyNcursesTest/prog",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/entrypoints/homeone-critical.cpp",
+		"/C/Users/Elvis/Desktop/SKWRD/SkyNcursesTest/Test.c",
+		"/C/Users/Elvis/Desktop/SKWRD/SkyNcursesTest/README.md",
+		"/C/Users/Elvis/Desktop/SKWRD/SkyNcursesTest/logfile",
+		"/C/Users/Elvis/Desktop/SKWRD/SkyNcursesTest/.gitignore",
+		"/C/Users/Elvis/Desktop/SKWRD/SkyNcursesTest/test",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/shared/boards/Homeone/TMTCManager/MessageHandlers.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/shared/boards/Homeone/TMTCManager/MessageHandlers.cpp",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/libs/mavlink_skyward_lib/mavlink_lib/skyward/mavlink_msg_start_launch_tc.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/libs/mavlink_skyward_lib/mavlink_lib/skyward/skyward.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore.wiki/Boardcore-Quick-Start.md",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/entrypoints/test.cpp",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/entrypoints/test.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/shared/boards/Homeone/TMTCManager/NoargCommandsTranslationMap.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/libs/mavlink_skyward_lib/mavlink_handlers_map.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/shared/boards/Homeone/Events.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/shared/boards/Homeone/Topics.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/libs/mavlink_skyward_lib/mavlink_lib/skyward/mavlink_msg_request_board_status_tc.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/libs/mavlink_skyward_lib/mavlink_lib/skyward/mavlink_msg_raw_event_tc.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/libs/mavlink_skyward_lib/mavlink_lib/skyward/mavlink_msg_ping_tc.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/libs/mavlink_skyward_lib/mavlink_lib/skyward/mavlink_msg_noarg_tc.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/libs/mavlink_skyward_lib/mavlink_lib/skyward/mavlink_msg_calibrate_barometers_tc.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/shared/boards/Homeone/FlightModeManager/FSM.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/shared/boards/Homeone/FlightModeManager/FSM.cpp",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/shared/boards/Homeone/TMTCManager/CircularBuffer.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/entrypoints/test_tmtc.cpp",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/shared/boards/Homeone/TMTCManager/TMTC_Config.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/scripts/anakin_client_curses/Makefile",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/shared/boards/Homeone/TMTCManager/TMTCManager.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/libs/mavlink_skyward_lib/mavlink_lib/skyward/mavlink_msg_arm.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/scripts/anakin_client_curses/client.c",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/scripts/anakin.sh",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/shared/boards/Homeone/TMTCManager/TMTCManager.cpp",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/config/arch/cortexM4_stm32f4/stm32f429zi_skyward_homeone/board_settings.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/shared/drivers/gamma868/Gamma868.cpp",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/shared/drivers/gamma868/Gamma868.h",
+		"/C/Users/Elvis/Desktop/SKWRD/Mavlink_editor/mavlink_skyward_lib/message_definitions/skyward.xml",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/shared/boards/Homeone/TMTCManager/TCHandlers.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/shared/events/EventBroker.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/shared/events/EventBroker.cpp",
+		"/C/Users/Elvis/Desktop/bibo.c",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/shared/boards/AnakinBoard.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/shared/boards/Homeone/FlightModeManager/FMM_Config.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/shared/events/Event.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/libs/miosix-kernel/miosix/arch/cortexM4_stm32f4/stm32f429zi_skyward_homeone/interfaces-impl/bsp.cpp",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/libs/miosix-kernel/miosix/arch/common/drivers/serial_stm32.cpp",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/libs/miosix-kernel/miosix/arch/common/drivers/serial_stm32.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/libs/miosix-kernel/miosix/arch/cortexM4_stm32f4/stm32f429zi_skyward_homeone/interfaces-impl/hwmapping.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/libs/miosix-kernel/miosix/filesystem/devfs/devfs.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/libs/miosix-kernel/miosix/arch/common/drivers/servo_stm32.cpp",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/libs/miosix-kernel/miosix/filesystem/console/console_device.cpp",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/libs/miosix-kernel/miosix/arch/cortexM4_stm32f4/stm32f429zi_skyward_homeone/core/stage_1_boot.cpp",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/.gitmodules",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/libs/miosix-kernel/miosix/arch/cortexM4_stm32f4/stm32f429zi_skyward_homeone/homeone.cfg",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/libs/miosix-kernel/miosix/arch/cortexM4_stm32f4/stm32f429zi_skyward_homeone/stm32_2m+256k_rom.ld",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/tmtc-curses.c",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/libs/mavlink_skyward_lib/mavlink_lib/mavlink_helpers.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/shared/drivers/gamma868/gamma_config.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/libs/miosix-kernel/miosix/config/Makefile.inc",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/sbs",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/libs/miosix-kernel/miosix/Makefile",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/Makefile.template",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/config/Makefile.inc",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/entrypoints/test-scheduler.cpp",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/config/miosix_settings.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/Makefile",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/libs/miosix-kernel/miosix/config/miosix_settings.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/libs/miosix-kernel/Makefile",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/libs/miosix-kernel/miosix/miosix.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/entrypoints/tmtc-test.cpp",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/shared/boards/homeone/FlightModeManager/FSM.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/shared/boards/homeone/TMTC/README.md",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/shared/boards/Homeone/TMTC/TMTCManager.cpp",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/shared/boards/homeone/FlightModeManager/FSM.cpp",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/shared/boards/homeone/TMTCManager/TMTC_Config.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/shared/boards/homeone/TMTC/TMTCManager.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/shared/boards/homeone/TMTC/TMTCManager.cpp",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/shared/ActiveObject.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/shared/boards/homeone/TMTC/TCHandler.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/shared/boards/homeone/TMTC/TMTCConfig.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/shared/boards/homeone/TMTC/TCHandler.cpp",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/shared/boards/homeone/TMTC/TMTCReceiver.cpp",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/shared/boards/homeone/TMTC/TMTCSender.cpp",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/shared/boards/homeone/TMTC/TMTC_config.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/shared/boards/homeone/TMTC/TMTCSender.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/shared/boards/homeone/TMTC/TMTCReceiver.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/shared/Common.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/shared/Singleton.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/shared/boards/homeone/TMTC/CircularBuffer.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/libs/mavlink_skyward_lib/mavlink_lib/skyward/mavlink_msg_test_msg.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/libs/mavlink_skyward_lib/mavlink_lib/mavlink_types.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/libs/mavlink_skyward_lib/mavlink_lib/protocol.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/libs/mavlink_skyward_lib/mavlink_lib/skyward/mavlink.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/libs/miosix-kernel/miosix/arch/common/CMSIS/Documentation/Core/html/jquery.js",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/config/arch/cortexM4_stm32f4/stm32f429zi_stm32f4discovery/board_settings.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/libs/miosix-kernel/miosix/config/arch/cortexM4_stm32f4/stm32f429zi_stm32f4discovery/board_settings.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/libs/miosix-kernel/miosix/arch/cortexM4_stm32f4/stm32f429zi_stm32f4discovery/interfaces-impl/bsp.cpp",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/shared/boards/homeone/Homeone_config.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/libs/mavlink_skyward_lib/mavlink_lib/skyward/mavlink_msg_ping.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/shared/drivers/piksi/contiguous_queue.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/shared/events/SyncQueue.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/libs/miosix-kernel/miosix/arch/cortexM4_stm32f4/stm32f429zi_stm32f4discovery/interfaces-impl/arch_registers_impl.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/libs/miosix-kernel/miosix/arch/common/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h",
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/entrypoints/dsgamma-config.cpp"
+	],
+	"find":
+	{
+		"height": 25.0
+	},
+	"find_in_files":
+	{
+		"height": 104.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": false
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "mt.c",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3732,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								205,
+								205
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "in.txt",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 98,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/C/Users/Elvis/AppData/Roaming/Sublime Text 3/Packages/User/gcc_api_build.sublime-build",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 577,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								112,
+								112
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JSON.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 118.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 25.0
+	},
+	"input":
+	{
+		"height": 49.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.exec":
+	{
+		"height": 143.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "Packages/User/gcc_api_build.sublime-build",
+	"project": "mt.sublime-project",
+	"replace":
+	{
+		"height": 46.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 345.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 592.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": false,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 144.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

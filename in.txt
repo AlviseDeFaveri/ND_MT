@@ -1,0 +1,14 @@
+tr
+0 a a R 0
+0 b b R 1
+1 b b R 1
+1 c c R 2
+1 d d R 3
+acc
+2
+3
+run
+abbbbbbbbbbbbc
+abbc
+abbbbd
+abbbe
