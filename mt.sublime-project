@@ -1,4 +1,13 @@
 {
+	"build_systems":
+	[
+		{
+			"file_regex": "(.+[^:]):(\\d+):(\\d+): (?:fatal )?((?:error|warning): .+)$",
+			"name": "mt",
+			"shell_cmd": "gcc mt.c -o mt && start make.bat",
+			"working_dir": "${project_path}"
+		}
+	],
 	"folders":
 	[
 		{

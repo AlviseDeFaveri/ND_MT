@@ -6,12 +6,11 @@
 #define N_TRAN 256
 #define N_STATES 256
 
-enum test_mov {UNINIT, S, L, R};
-enum mt_status {ONGOING, ACCEPT, NOT_ACCEPT};
-uint32_t glob_ID = 0;
+enum test_mov {S, L, R};
+enum mt_status {ONGOING, ACCEPT, NOT_ACCEPT, UNDEFINED};
 
 /**
- * Transizione
+ * Transizione:
  */
 typedef struct Transition 
 {
@@ -20,54 +19,29 @@ typedef struct Transition
 	struct State* nextState;
 } Transition;
 
-Transition* newTran(const char output, const enum test_mov mov, struct State* nextState) {
-	Transition* tran = malloc(sizeof(Transition));
-	tran->output = output;
-	tran->mov = mov;
-	tran->nextState = nextState;
-	return tran;
-}
+/**
+ * Transizione:
+ */
+typedef struct TranList 
+{
+	Transition tran;
+	struct TranList* next;
+} TranList;
 
 /**
- * Stato
+ * Stato: ha un'array di 256 liste di transizioni (ogni lista->1 char di input)
  */
 typedef struct State
 {
-	struct Transition transitions[N_TRAN];
+	struct TranList* transitions[N_TRAN]; // TODO array di liste
 	enum mt_status status;
 	int id;
 } State;
 
-State* newState(int id) {
-	State* state = malloc(sizeof(State));
-
-	int i = 0;
-	for(i = 0; i < N_TRAN; i++){
-		state->transitions[i].mov = UNINIT;
-	}
-	state->id = id;
-	state->status = NOT_ACCEPT; // cambia se ne aggiungi qualcuna
-	return state;
-}
-
-void addTran(State* state, const char input, const char output,
-				 const enum test_mov mov, struct State* nextState) {
-	assert(mov != UNINIT);
-
-	Transition* tran = &(state->transitions[input]);
-	tran->output = output;
-	tran->mov = mov;
-	tran->nextState = nextState;
-
-	if(state->status == NOT_ACCEPT) {
-		state->status = ONGOING;
-	}
-}
-
 /**
- * Nastro
+ * Nastro: double linked list di celle, ognuna ha un proprietario
  */
-typedef struct Tape_cell
+typedef struct Tape_cell 
 {
 	uint32_t owner;
 	struct Tape_cell* prev;
@@ -75,9 +49,85 @@ typedef struct Tape_cell
 	char content;
 } Tape_cell;
 
+/**
+ * MT: ha un array di stati (hashmap) e la linked list di celle
+ */
+typedef struct MT
+{
+	uint32_t ID;
+	uint32_t nMovs;
+	struct Tape_cell* curCell; // testina del nastro
+	struct State* curState;
+} MT;
+
+/**
+ * MT: ha un array di stati (hashmap) e la linked list di celle
+ */
+typedef struct MTListItem
+{
+	MT* mt;
+	struct MTListItem* next;
+} MTListItem;
+
+
+/* GLOBAL VARIABLES */
+uint32_t nMt = 0;
+MTListItem* mtlist = NULL;
+State* states[N_STATES];  // TODO Hashmap per la ricerca dello stato prossimo (in creazione)
+
+/**
+ * Costruttore per gli stati (NON accettato di default)
+ */
+State* newState(int id) {
+	State* state = malloc(sizeof(State));
+
+	int i = 0;
+	for(i = 0; i < N_TRAN; i++){
+		state->transitions[i] = NULL;
+	}
+	state->id = id;
+	state->status = NOT_ACCEPT; // cambia se ne aggiungi qualcuna
+	return state;
+}
+
+/**
+ * Costruttore per le transizioni (trasforma stati non accettanti in transitori)
+ */
+void addTran(State* state, const char input, const char output,
+				 const enum test_mov mov, struct State* nextState) {
+
+	TranList* listItem = malloc(sizeof(TranList)); // &(state->transitions[input]);
+	Transition* tran = &(listItem->tran);
+
+	tran->output = output;
+	tran->mov = mov;
+	tran->nextState = nextState;
+
+	if(state->status == NOT_ACCEPT) {
+		state->status = ONGOING;
+	}
+
+	/* Add tran to state */
+	TranList* freeSpace = state->transitions[input];
+	if(freeSpace == NULL) {
+		state->transitions[input] = listItem;
+		listItem->next = NULL;
+	} else {
+		while(freeSpace->next != NULL) {
+			freeSpace = freeSpace->next;
+		}
+		freeSpace->next = listItem;
+		listItem->next = NULL;
+	}
+}
+
+/**
+ * Costruttore delle celle del nastro (con contenuto BLANK)
+ */
 Tape_cell* newCell(const uint32_t owner, struct Tape_cell* prev, 
 						struct Tape_cell* next) {
 	Tape_cell* cell = malloc(sizeof(Tape_cell));
+
 	cell->owner = owner;
 	cell->prev= prev;
 	cell->next = next;
@@ -85,39 +135,88 @@ Tape_cell* newCell(const uint32_t owner, struct Tape_cell* prev,
 	return cell;
 }
 
-/**
- * MT
- */
-typedef struct MT
-{
-	uint32_t ID;
-	uint32_t nMovs;
-	struct Tape_cell* curCell;
-	struct State* curState;
-	State* states[N_STATES];
-} MT;
+void destroyTape(Tape_cell* cell) {
+	Tape_cell* initcell = cell;
+	Tape_cell* cur = cell->next;
+	int i = 0;
 
+	// printf("Avanti\n");
+	while(cur != NULL && cur->next != NULL) {
+		cur = cur->next;
+		// printf("%c \n", cur->prev->content);
+		free(cur->prev);
+		i++;
+	}
+
+	if(cur != NULL) {
+		// printf("%c \n", cur->content);
+		free(cur);
+	}
+
+	// printf("Indietro\n");
+	cur = initcell;
+	while(cur->prev != NULL) {
+		cur = cur->prev;
+		// printf("%c \n", cur->next->content);
+		free(cur->next);
+		i++;
+	}
+	if(cur != NULL) {
+		// printf("%c \n", cur->content);
+		free(cur);
+	}
+
+	// printf("\nDestroyed %d cells\n", i);
+}
+
+/**
+ * Costruttore della MT
+ */
 MT* newMT() {
+
+	/* Crea MT */
 	MT* mt = malloc(sizeof(MT));
-	mt->ID = glob_ID;
-	glob_ID++;
+	printf("Created new MT, TOT=%d\n", nMt+1);
+
+	/* Crea listItem */
+	MTListItem* mtItem = malloc(sizeof(MTListItem));
+	mtItem->mt = mt;
+	mtItem->next = NULL;
+
+	/* Mettila nel primo posto libero */
+	MTListItem* item = mtlist;
+	printf("MTList[0] = NULL? %d\n", mtlist == NULL);
+	int i = 0;
+	if(mtlist == NULL){
+		mtlist = mtItem;
+	} 
+	else {
+		while(item->next != NULL) {
+			item = item->next;
+			i++;
+		}
+		item->next = mtItem;
+	}
+	printf("MTList[0] = NULL? %d\n", mtlist == NULL);
+
+	/* Default settings */
+	mt->ID = i;
+	nMt++;
+
 	mt->nMovs = 1;
 	mt->curCell = NULL;
 	mt->curState = NULL;
 
-	for(int i = 0; i < N_STATES; i++){
-		mt->states[i] = NULL;
-	}
-
 	return mt;
 }
 
-MT* copyMt(MT* oldMt) {
+/**
+ * Crea nuova MT incrementando l'id, con stessa testina, stesso stato attuale
+ * e stesso numero di mosse.
+ */
+MT* copyMtAndIncrease(MT* oldMt) {
 	if(oldMt != NULL) {
-		MT* mt = malloc(sizeof(MT));
-
-		mt->ID = glob_ID;
-		glob_ID++;
+		MT* mt = newMT();
 
 		mt->nMovs = oldMt->nMovs;
 		mt->curCell = oldMt->curCell;
@@ -129,4 +228,47 @@ MT* copyMt(MT* oldMt) {
 	return NULL;
 }
 
-// TODO distruttori!!!
+MT* copyMt(MT* oldMt) {
+	if(oldMt != NULL) {
+		MT* mt = malloc(sizeof(MT));
+
+		mt->ID = oldMt->ID;
+
+		mt->nMovs = oldMt->nMovs;
+		mt->curCell = oldMt->curCell;
+		mt->curState = oldMt->curState;
+
+		return mt;
+	}
+
+	return NULL;
+}
+
+void destroyMt(int i) {
+	MTListItem* prev = mtlist;
+	MTListItem* cur = NULL;
+
+	if(prev != NULL) {
+		cur = prev->next;
+	}
+
+	/* Cerca l'item selezionato */
+	int j = 0;
+	while(i < j) {
+		if(cur == NULL) {
+			return;
+		}
+
+		/* Fai avanzare prev e next */
+		prev = cur;
+		cur = cur->next;
+		j++;
+	}
+
+	/* Assegna il next del prev al prossimo */
+	prev->next = cur->next;
+
+	/* libera il puntatore */
+	free(cur);
+	nMt--;
+}

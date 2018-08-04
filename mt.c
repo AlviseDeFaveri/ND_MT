@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include "mtparser.h"
 
-Transition* findTran(Transition* tranList, char read);
 void moveCell(MT* mt, enum test_mov mov);
 enum mt_status evolve(MT* mt);
-void dump(MT* mt);
+void mtDump(MT* mt);
+void tapeDump(MT* mt);
 
 /**
  * Main
@@ -14,63 +14,136 @@ int main() {
 	enum mt_status status = ONGOING;
 	printf("STARTED\n");
 
+	for(int i = 0; i < N_STATES; i++){
+		states[i] = NULL;
+	}
+
 	MT* mt = parseMT();
-	printf("MT parsed\n");
+	printf("\n-------- MT -----------\n");
+	mtDump(mt);
+	printf("-----------------------\n");
 
-	uint32_t tape = parseTape(mt);
+	uint32_t tape; // = parseTape(mt);
+	// printf("\n----NEW INPUT---\n");
+	// tapeDump(mt);
 
-	while(tape != 0) {
-
-		//dump(mt);
-		//return 0;
-
-		/* Fai evolvere la MT finchè non finisce in uno stato di stop */
-		status = ONGOING;
-		while (status == ONGOING) {
-			status = evolve(mt);
-		}
-
-		printf("FINISHED with acceptance = %d\n",  (status == ACCEPT) ? 1 : 0);
+	while(1) {
 
 		mt->curCell = NULL;
 		tape = parseTape(mt);
-		mt->curState = mt->states[0];
+
+		if (tape == 0) break;
+
+		mt->curState = states[0];
 		mt->nMovs = 10; // TODO read max movs
 
-		printf("Tape parsed\n");
+		printf("\n----NEW INPUT---\n");
+		//tapeDump(mt);
 		char flush;
-		while ((flush = getchar()) != '\n' && flush != EOF) { }
+
+		/* Fai evolvere ogni MT finchè non finisce in uno stato di stop */
+		status = ONGOING;
+		while (1) {
+
+			/* Cicla su tutte le MT */
+			MTListItem* item = mtlist;
+			int i = 0;
+
+			while (item != NULL) {
+				/* Evolvi la MT */
+				status = evolve(item->mt);
+
+				/* Se è in uno stato finale distruggi la MT */
+				if (status == NOT_ACCEPT || status == UNDEFINED) {
+					printf("Exit status %d\n", status);
+					if(nMt > 1) {
+						destroyMt(i);
+						printf("Distruggo MT %d, TOT= %d\n", i, nMt);
+					} else {
+						printf("Last MT %d, TOT= %d\n", i, nMt);
+						break;
+					}
+				}
+
+				item = item->next;
+				i++;
+			}
+			printf("exited status=%d n =%d\n", status, nMt);
+			if(status == ACCEPT || status != ONGOING && nMt <= 1)
+				break;
+		}
+
+		printf("FINISHED with acceptance = %d\n",  (status == ACCEPT) ? 1 : 0);
+		//while ((flush = getchar()) != '\n' && flush != EOF) { }
+
+		/* Dealloca il nastro */
+		destroyTape(mtlist->mt->curCell);
+
+		/* Dealloca tutte le MT parallele */
+		if (nMt > 1){
+			for (int i = 1; i < nMt; i++) {
+				destroyMt(i);
+			}
+		}
+
+		nMt = 1;
 	}
 
 	return 0;
 }
 
 /**
- * Evolve MT
+ * Evolve MT: cerca transizione, scrivi carattere, muovi la testina, cambia stato e decrementa il numero di mosse
  */
 enum mt_status evolve(MT* mt) {
-	printf("Evolving MT_%x: reading %c\n", mt->ID, mt->curCell->content);
-	/* Leggi dal nastro un carattere e cercalo nella mappa delle transizioni dello stato corrente */
-	Transition* tran = findTran(mt->curState->transitions,
-											 mt->curCell->content);
-	// TODO: epsilon-mosse
 
-	if(tran != NULL && mt->nMovs > 0) {
-		printf("Found transition %c, %x | %c, %d, %x\n", mt->curCell->content, 
-			mt->curState, tran->output, tran->mov, tran->nextState);
-		/* Check se lo stato prossimo è di stop */
-		if(tran->nextState->status != ONGOING) {
-			return tran->nextState->status;
+	/* Leggi dal nastro un carattere e prendi la liste delle transizioni corrispondenti */
+	printf("Evolving MT_%d: reading %c\n", mt->ID, mt->curCell->content);
+	TranList* item = mt->curState->transitions[mt->curCell->content];
+	
+	if (item != NULL) {
+		uint8_t first = 1;
+
+		/* Checka se ha ancora mosse da fare */
+		if(mt->nMovs <= 0) {
+			printf("UNDEFINED\n");
+			return UNDEFINED;
 		}
 
-		/* Scrivi sul nastro e muoviti */
-		mt->curCell->content = tran->output;
-		moveCell(mt, tran->mov);
+		/* Cicla su tutte le possibili transizioni */
+		do {
+			Transition* tran = &(item->tran);
 
-		/* Cambia lo stato corrente */
-		mt->curState = tran->nextState;
-		mt->nMovs--;
-	} else {
+			/* Check se lo stato prossimo è NOT ACCEPT(errore) o ACCEPT */
+			if (tran->nextState->status != ONGOING) {
+				return tran->nextState->status;
+			}
+
+			MT* tempMt = copyMt(mt);
+
+			if (first == 1)
+			{
+				/* Scrivi sul nastro e muoviti */
+				mt->curCell->content = tran->output;
+				moveCell(mt, tran->mov);
+
+				/* Cambia lo stato corrente */
+				mt->curState = tran->nextState;
+				mt->nMovs--;
+
+				first = 0;
+			} 
+			else {
+				MT* temp = copyMtAndIncrease(tempMt);
+				// mtDump(temp);
+				// tapeDump(temp);
+			}
+
+			free(tempMt);
+			item = item->next;
+		} while (item != NULL);
+	} 
+	else {
 		return NOT_ACCEPT;
 	}
 
@@ -78,22 +151,9 @@ enum mt_status evolve(MT* mt) {
 }
 
 /**
- * Find transition inside the transition array of the state (TODO check hashmap)
- */
-Transition* findTran(Transition* tranList, char read) {
-	if(tranList[read].mov != UNINIT)
-		return &tranList[read];
-	else
-		return NULL;
-}
-
-/**
  * Muove la testina (creando la cella se ce n'è bisogno)
  */
 void moveCell(MT* mt, enum test_mov mov) {
-	/* Check that the movement is valid */
-	assert(mov != UNINIT);
-
 	/* Store a pointer to the target cell */
 	Tape_cell* nextCell = mt->curCell;
 	if(mov == L) {
@@ -114,48 +174,67 @@ void moveCell(MT* mt, enum test_mov mov) {
 	mt->curCell = nextCell;
 }
 
-void dump(MT* mt) {
-	if(mt == NULL) {
+/**
+ * Stampa la MT
+ */
+void mtDump(MT* mt) {
+	
+	if (mt == NULL) {
 		printf("MT is NULL!\n");
-	} else {
+	} 
+	else {
 		printf("MT {\n");
-		printf("\tID %d\n", mt->ID);
+		printf("\tis %d\n", mt->ID);
 
 		State* state = mt->curState;
-		printf("\tStates {\n");
+		printf("\tSTATES {\n");
 
-		while(state != NULL) {
-			printf("\t\tstate: %x\n", state);
+		for (int i = 0; i < N_TRAN; i++) 
+		{
+
+			if (states[i] == NULL)
+				break;
+
+			state = states[i];
+			printf("\t\tid: %d\n", state->id);
 			printf("\t\tstatus: %d\n", state->status);
 			printf("\t\tTRANSITIONS {\n");
 
-			for(int i = 0; i < N_TRAN; i++) {
-				if(state->transitions[i].mov != UNINIT) {
-					printf( "\t\t\tout %c mov %d nextState %x\n", 
-						state->transitions[i].output, state->transitions[i].mov,
-						state->transitions[i].nextState );
+			for (int i = 0; i < N_TRAN; i++) 
+			{
+				if(state->transitions[i] != NULL) {
+					TranList* item = state->transitions[i];
+
+					do {
+						printf( "\t\t\tout %c mov %d nextState %d\n", 
+									item->tran.output, item->tran.mov,
+									item->tran.nextState->id );
+						item = item->next;
+					} while(item != NULL);
 				}
 			}
 
 			printf("\t\t}\n");
-			state = NULL; // state = state->nextState;
 		}
 		printf("\t}\n");
-
-		Tape_cell* cell = mt->curCell;
-		printf("\tCells {\n");
-
-		while(cell != NULL) {
-			printf("\t\tCell {\n");
-			printf("\t\t\taddress: %x\n", cell);
-			printf("\t\t\towner: %d\n", cell->owner);
-			printf("\t\t\tcontent: %c\n", cell->content);
-			printf("\t\t\tprev: %x\n", cell->prev);
-			printf("\t\t\tnext: %x\n", cell->next);
-			printf("\t\t}\n");
-			cell = cell->next;
-		}
-
-		printf("\t}\n");
+		printf("}\n");
 	}
+}
+
+void tapeDump(MT* mt) {
+	Tape_cell* cell = mt->curCell;
+	printf("\tCells {\n");
+
+	while(cell != NULL) {
+		printf("\t\tCell {\n");
+		printf("\t\t\taddress: %x\n", cell);
+		printf("\t\t\towner: %d\n", cell->owner);
+		printf("\t\t\tcontent: %c\n", cell->content);
+		printf("\t\t\tprev: %x\n", cell->prev);
+		printf("\t\t\tnext: %x\n", cell->next);
+		printf("\t\t}\n");
+		cell = cell->next;
+	}
+
+	printf("\t}\n");
 }

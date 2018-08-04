@@ -13,4 +13,10 @@ Ogni volta che c'è più di una transizione, crei una nuova MT che ha come punta
 Transizione: f: input --> output, movimento.
 Può essere realizzata come una f che cerca su una lista/hashmap il valore di input
 
-map<a, <out, mov, nextState>>
+## TODO
+
+* free memory
+* hashmap degli stati
+* hashmap delle MT
+X array di liste di transizioni
+* max movs leggerli dal file
