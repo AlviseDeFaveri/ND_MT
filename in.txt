@@ -7,12 +7,12 @@ tr
 1 d d R 3
 4 b b R 5
 acc
-2
-3
 5
+max
+10
 run
-aaabbbbbbbbbbbbbbbbc
-aaabbc
+abbbbbbbbbbbbbbbbc
+abbc
 abbbe
 abbbc
 abbbbd

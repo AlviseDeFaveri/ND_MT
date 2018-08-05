@@ -15,8 +15,8 @@ Può essere realizzata come una f che cerca su una lista/hashmap il valore di in
 
 ## TODO
 
-* free memory
+X free memory
 * hashmap degli stati
-* hashmap delle MT
+X hashmap delle MT (per ora Lista)
 X array di liste di transizioni
 * max movs leggerli dal file

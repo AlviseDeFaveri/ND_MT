@@ -5,6 +5,7 @@ void moveCell(MT* mt, enum test_mov mov);
 enum mt_status evolve(MT* mt);
 void mtDump(MT* mt);
 void tapeDump(MT* mt);
+int maxMovs = 0;
 
 /**
  * Main
@@ -34,8 +35,9 @@ int main() {
 
 		if (tape == 0) break;
 
+		printf("%d\n", mt->nMovs);
 		mt->curState = states[0];
-		mt->nMovs = 10; // TODO read max movs
+		maxMovs = mt->nMovs;
 
 		printf("\n----NEW INPUT---\n");
 		//tapeDump(mt);
@@ -47,7 +49,6 @@ int main() {
 
 			/* Cicla su tutte le MT */
 			MTListItem* item = mtlist;
-			int i = 0;
 
 			while (item != NULL) {
 				/* Evolvi la MT */
@@ -55,21 +56,23 @@ int main() {
 
 				/* Se è in uno stato finale distruggi la MT */
 				if (status == NOT_ACCEPT || status == UNDEFINED) {
-					printf("Exit status %d\n", status);
-					if(nMt > 1) {
-						destroyMt(i);
-						printf("Distruggo MT %d, TOT= %d\n", i, nMt);
+					// printf("Exit status %d\n", status);
+					if(nMt >= 1) {
+						// printf("A) Distruggo MT %d, TOT= %d\n", item->mt->ID, nMt);
+						item = destroyMt(item->mt->ID);
+						// printf("Done\n");//printf("B) Distrutta MT %d, TOT= %d\n", item->mt->ID, nMt);
 					} else {
-						printf("Last MT %d, TOT= %d\n", i, nMt);
+						// printf("Last MT %d, TOT= %d\n", item->mt->ID, nMt);
 						break;
 					}
 				}
 
-				item = item->next;
-				i++;
+				// printf("item==NULL?%d\n", item->mt == NULL);
+				if(item != NULL)
+					item = item->next;
 			}
-			printf("exited status=%d n =%d\n", status, nMt);
-			if(status == ACCEPT || status != ONGOING && nMt <= 1)
+			// printf("exited status=%d n =%d\n", status, nMt);
+			if(status == ACCEPT || (status != ONGOING && nMt <= 1))
 				break;
 		}
 
@@ -87,39 +90,42 @@ int main() {
 		}
 
 		nMt = 1;
+		glob_id = 1;
+		printf("nMovs = %d\n", mt->nMovs);
+		printf("id della finale=%d\n", mtlist->mt->ID);
+		mt->nMovs = maxMovs;
 	}
 
 	return 0;
 }
 
 /**
- * Evolve MT: cerca transizione, scrivi carattere, muovi la testina, cambia stato e decrementa il numero di mosse
+ * Evolve MT: scrivi carattere, muovi la testina, cambia stato e decrementa il numero di mosse
  */
-enum mt_status evolve(MT* mt) {
+enum mt_status evolve(MT* mt, Transition* tran) {
 
 	/* Leggi dal nastro un carattere e prendi la liste delle transizioni corrispondenti */
-	printf("Evolving MT_%d: reading %c\n", mt->ID, mt->curCell->content);
+	printf("Evolving MT_%d: reading %c ", mt->ID, mt->curCell->content);
 	TranList* item = mt->curState->transitions[mt->curCell->content];
 	
 	if (item != NULL) {
-		uint8_t first = 1;
 
 		/* Checka se ha ancora mosse da fare */
 		if(mt->nMovs <= 0) {
-			printf("UNDEFINED\n");
+			printf("UNDEFINED %d\n", mt->ID);
 			return UNDEFINED;
 		}
 
 		/* Cicla su tutte le possibili transizioni */
+		uint8_t first = 1;
+		MT* tempMt = copyMt(mt);
 		do {
 			Transition* tran = &(item->tran);
 
 			/* Check se lo stato prossimo è NOT ACCEPT(errore) o ACCEPT */
 			if (tran->nextState->status != ONGOING) {
-				return tran->nextState->status;
+			 	return tran->nextState->status;
 			}
-
-			MT* tempMt = copyMt(mt);
 
 			if (first == 1)
 			{
@@ -128,6 +134,7 @@ enum mt_status evolve(MT* mt) {
 				moveCell(mt, tran->mov);
 
 				/* Cambia lo stato corrente */
+				printf("nextState: %d\n", tran->nextState->id);
 				mt->curState = tran->nextState;
 				mt->nMovs--;
 
@@ -135,13 +142,14 @@ enum mt_status evolve(MT* mt) {
 			} 
 			else {
 				MT* temp = copyMtAndIncrease(tempMt);
+				printf("created new mt", tran->nextState->id);
 				// mtDump(temp);
 				// tapeDump(temp);
 			}
 
-			free(tempMt);
 			item = item->next;
 		} while (item != NULL);
+		free(tempMt);
 	} 
 	else {
 		return NOT_ACCEPT;

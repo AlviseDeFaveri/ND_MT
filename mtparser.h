@@ -101,8 +101,18 @@ MT* parseMT() {
 		while ((flush = getchar()) != '\n' && flush != EOF) { }
 	}
 
-	/* Run flag*/
+	/* Max FLAG */
 	scanf("%s", s);
+	if(strcmp(s,"max") != 0) {
+		return NULL;
+	} 
+
+	/* Maximum moves */
+	printf("Max flag found\n");
+	scanf(" %d", &(mt->nMovs));
+
+	/* Run flag*/
+	scanf(" %s", s);
 	if(strcmp(s,"run") != 0) {
 		return NULL;
 	} 
@@ -111,7 +121,6 @@ MT* parseMT() {
 	}
 
 	mt->curState = states[0];
-	mt->nMovs = 10; // TODO read max movs
 
 	printf("Initial state set to %d\n", states[0]);
 	while ((flush = getchar()) != '\n' && flush != EOF) { }
@@ -129,7 +138,7 @@ uint32_t parseTape(MT* mt) {
 	Tape_cell* initCell;
 
 	/* Read chars */
-	//while ((c = getchar()) != '\n' && c != EOF) { }
+	// while ((c = getchar()) != '\n' && c != EOF) { }
 	c = getchar();
 
 	while(c != QUIT_CHAR && c != EOF) {

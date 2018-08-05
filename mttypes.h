@@ -72,6 +72,7 @@ typedef struct MTListItem
 
 /* GLOBAL VARIABLES */
 uint32_t nMt = 0;
+uint32_t glob_id = 0;
 MTListItem* mtlist = NULL;
 State* states[N_STATES];  // TODO Hashmap per la ricerca dello stato prossimo (in creazione)
 
@@ -176,7 +177,7 @@ MT* newMT() {
 
 	/* Crea MT */
 	MT* mt = malloc(sizeof(MT));
-	printf("Created new MT, TOT=%d\n", nMt+1);
+	// printf("Created new MT, TOT=%d\n", nMt+1);
 
 	/* Crea listItem */
 	MTListItem* mtItem = malloc(sizeof(MTListItem));
@@ -185,23 +186,22 @@ MT* newMT() {
 
 	/* Mettila nel primo posto libero */
 	MTListItem* item = mtlist;
-	printf("MTList[0] = NULL? %d\n", mtlist == NULL);
-	int i = 0;
+	// printf("MTList[0] = NULL? %d\n", mtlist == NULL);
 	if(mtlist == NULL){
 		mtlist = mtItem;
 	} 
 	else {
 		while(item->next != NULL) {
 			item = item->next;
-			i++;
 		}
 		item->next = mtItem;
 	}
-	printf("MTList[0] = NULL? %d\n", mtlist == NULL);
+	// printf("MTList[0] = NULL? %d\n", mtlist == NULL);
 
 	/* Default settings */
-	mt->ID = i;
+	mt->ID = glob_id++;
 	nMt++;
+	// printf("Created new, TOT=%d\n", nMt);
 
 	mt->nMovs = 1;
 	mt->curCell = NULL;
@@ -244,31 +244,47 @@ MT* copyMt(MT* oldMt) {
 	return NULL;
 }
 
-void destroyMt(int i) {
+MTListItem* destroyMt(int id) {
 	MTListItem* prev = mtlist;
 	MTListItem* cur = NULL;
 
-	if(prev != NULL) {
-		cur = prev->next;
+	if(mtlist == NULL) {
+		printf("No MTs\n");
+		return NULL;
 	}
 
-	/* Cerca l'item selezionato */
-	int j = 0;
-	while(i < j) {
-		if(cur == NULL) {
-			return;
+	/* Se è il primo cambia mtlist */
+	if(mtlist->mt->ID == id) {
+		// printf("trovata Prima MT\n");
+		cur = mtlist;
+		mtlist = prev->next;
+	} 
+	else {
+
+		/* Assegna il cur al secondo elemento */
+		cur = prev->next;
+		// printf("prev %d cur %d\n", prev->mt->ID, cur->mt->ID);
+
+		/* Cerca l'item con l'id selezionato */
+		while(cur != NULL && cur->mt->ID != id) {
+			/* Fai avanzare prev e next */
+			prev = cur;
+			cur = cur->next;
+			// printf("prev %d cur %d\n", prev->mt->ID, cur == NULL ? -1 : cur->mt->ID);
 		}
 
-		/* Fai avanzare prev e next */
-		prev = cur;
-		cur = cur->next;
-		j++;
+		/* Assegna il next del prev al prossimo */
+		// printf("Substitute %d <- %d\n", prev->next->mt->ID, cur->next == NULL ? -1 : cur->next->mt->ID);
+		if(cur != NULL && cur->next != NULL) {
+			prev->next = cur->next;
+		} else {
+			prev->next = NULL;
+		}
 	}
 
-	/* Assegna il next del prev al prossimo */
-	prev->next = cur->next;
-
-	/* libera il puntatore */
+	/* Libera il puntatore */
 	free(cur);
 	nMt--;
+
+	return prev;
 }
