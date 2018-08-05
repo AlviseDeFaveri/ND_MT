@@ -75,6 +75,7 @@ uint32_t nMt = 0;
 uint32_t glob_id = 0;
 MTListItem* mtlist = NULL;
 State* states[N_STATES];  // TODO Hashmap per la ricerca dello stato prossimo (in creazione)
+int maxMovs = 0;
 
 /**
  * Costruttore per gli stati (NON accettato di default)
@@ -123,16 +124,16 @@ void addTran(State* state, const char input, const char output,
 }
 
 /**
- * Costruttore delle celle del nastro (con contenuto BLANK)
+ * Costruttore delle celle del nastro
  */
 Tape_cell* newCell(const uint32_t owner, struct Tape_cell* prev, 
-						struct Tape_cell* next) {
+						struct Tape_cell* next, const char content) {
 	Tape_cell* cell = malloc(sizeof(Tape_cell));
 
 	cell->owner = owner;
 	cell->prev= prev;
 	cell->next = next;
-	cell->content = BLANK;
+	cell->content = content;
 	return cell;
 }
 
@@ -253,11 +254,27 @@ MTListItem* destroyMt(int id) {
 		return NULL;
 	}
 
+	MTListItem* mtl = mtlist;
+	printf("MTLIST (TOT=%d):\n", nMt);
+	while(mtl!= NULL) {
+		printf("MT %d\n", mtl->mt->ID);
+		mtl = mtl->next;
+	}
+
+	printf("Destroying %d == %d, N=%d\n", id, mtlist->mt->ID, nMt);
+
+	if(nMt <= 1){
+		assert(id == mtlist->mt->ID);
+		mtlist->next = NULL;
+		return mtlist;
+	}
+
 	/* Se è il primo cambia mtlist */
 	if(mtlist->mt->ID == id) {
-		// printf("trovata Prima MT\n");
+		printf("trovata Prima MT\n");
 		cur = mtlist;
 		mtlist = prev->next;
+		printf("%d, %x\n", mtlist->mt->ID, mtlist->next);
 	} 
 	else {
 
@@ -285,6 +302,13 @@ MTListItem* destroyMt(int id) {
 	/* Libera il puntatore */
 	free(cur);
 	nMt--;
+
+	mtl = mtlist;
+	printf("MTLIST (TOT=%d):\n", nMt);
+	while(mtl!= NULL) {
+		printf("MT %d\n", mtl->mt->ID);
+		mtl = mtl->next;
+	}
 
 	return prev;
 }

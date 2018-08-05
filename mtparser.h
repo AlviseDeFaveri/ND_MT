@@ -121,6 +121,7 @@ MT* parseMT() {
 	}
 
 	mt->curState = states[0];
+	maxMovs = mt->nMovs;
 
 	printf("Initial state set to %d\n", states[0]);
 	while ((flush = getchar()) != '\n' && flush != EOF) { }
@@ -144,11 +145,11 @@ uint32_t parseTape(MT* mt) {
 	while(c != QUIT_CHAR && c != EOF) {
 		/* Se è il primo carattere crea una cella senza prev e next */
 		if(mt->curCell == NULL) {
-			mt->curCell = newCell(mt->ID, NULL, NULL);
+			mt->curCell = newCell(mt->ID, NULL, NULL, BLANK);
 			initCell = mt->curCell;
 		} 
 		else { /* Se non è il primo crea la prossima cella e avanza di 1 */
-			mt->curCell->next = newCell(mt->ID, mt->curCell, NULL);
+			mt->curCell->next = newCell(mt->ID, mt->curCell, NULL, BLANK);
 			mt->curCell = mt->curCell->next;
 		}
 
