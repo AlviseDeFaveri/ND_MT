@@ -266,6 +266,7 @@ MTListItem* destroyMt(int id) {
 	if(nMt <= 1){
 		assert(id == mtlist->mt->ID);
 		mtlist->next = NULL;
+		//free(mtlist->mt);
 		return mtlist;
 	}
 

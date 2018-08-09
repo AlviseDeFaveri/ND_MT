@@ -1,8 +1,8 @@
 tr
 0 a a R 0
 0 b b R 1
-1 b b R 1
 1 b b R 4
+1 b b R 1
 1 c c R 2
 1 d d R 3
 4 b b R 5
