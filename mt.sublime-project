@@ -4,8 +4,18 @@
 		{
 			"file_regex": "(.+[^:]):(\\d+):(\\d+): (?:fatal )?((?:error|warning): .+)$",
 			"name": "mt",
-			"shell_cmd": "gcc mt.c -o mt && start make.bat",
-			"working_dir": "${project_path}"
+			"shell_cmd": "gcc -o mt mt.c && start make.bat",
+			"working_dir": "${project_path}",
+			"variants": [
+				{
+					"name": "notrace",
+					"shell_cmd": "gcc -DNOTRACE -o mt mt.c && start make.bat"
+				},
+				{
+					"name": "gdb",
+					"shell_cmd": "gcc -g -o mt mt.c && start makegdb.bat"
+				}
+			]
 		}
 	],
 	"folders":
@@ -16,5 +26,9 @@
 	],
 	"settings":
 	{
+	     "sublimegdb_workingdir": "${folder:${project_path:mt.c}}",
+	     // NOTE: You MUST provide --interpreter=mi for the plugin to work
+	     "sublimegdb_commandline": "gdb --interpreter=mi ./mt",
+
 	}
 }

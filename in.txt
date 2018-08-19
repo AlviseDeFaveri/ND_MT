@@ -1,19 +1,24 @@
 tr
 0 a a R 0
-0 b b R 1
-1 b b R 4
-1 b b R 1
-1 c c R 2
-1 d d R 3
-4 e e R 5
+0 b b R 0
+0 a c R 1
+0 b c R 2
+1 a c L 3
+2 b c L 3
+3 c c L 3
+3 a c R 4
+3 b c R 5
+4 c c R 4
+4 a c L 3
+5 c c R 5
+5 b c L 3
+3 _ _ R 6
+6 c c R 6
+6 _ _ S 7
 acc
-5
+7
 max
-10
+800
 run
-abcd
-abbbbbbbbbbbbbbbbc
-abbc
-abbbe
-abbbc
-abbbbd
+aababbabaa
+aababbabaaaababbabaa

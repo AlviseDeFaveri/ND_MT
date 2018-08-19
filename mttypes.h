@@ -1,6 +1,12 @@
 #ifndef MTTYPES
 #define MTTYPES
 
+#ifdef NOTRACE
+	#define TRACE(msg, ...) ((void)0)
+#else
+	#define TRACE(msg, ...) printf(msg, ##__VA_ARGS__)
+#endif
+
 #include <stdint.h>
 #include <malloc.h>
 #include <assert.h>
@@ -55,6 +61,7 @@ typedef struct MT
 	uint32_t nMovs;
 	struct Tape_cell* curCell; // testina del nastro
 	struct State* curState;
+	enum mt_status result;
 } MT;
 
 
@@ -130,11 +137,12 @@ MTListItem* newMT(uint32_t ID, uint32_t nMovs, Tape_cell* curCell, State* curSta
 	mtItem->mt.nMovs = nMovs;
 	mtItem->mt.curCell = newCell(ID, curCell->prev, curCell->next, curCell->content);
 	mtItem->mt.curState = curState;
+	mtItem->mt.result = ONGOING;
 
 	assert(curCell != NULL);
 	assert(curState != NULL);
 
-	// printf("Created MT_%d\n", ID);
+	TRACE("Created MT_%d\n", ID);
 
 	return mtItem;
 }
@@ -154,7 +162,7 @@ void destroyTape(Tape_cell* cell, uint32_t id)
 
 	/* Distruggi tutte quelle dopo */
 	while(curCell != NULL && curCell->owner == id) {
-		// printf("Destroying cell '%c'\n", curCell->content);
+		// TRACE("Destroying cell '%c'\n", curCell->content);
 		i++;
 		Tape_cell* nextCell = curCell->next;
 		free(curCell);
@@ -164,13 +172,13 @@ void destroyTape(Tape_cell* cell, uint32_t id)
 	/* Distruggi tutte quelle prima */
 	curCell = cell;
 	while(curCell != NULL && curCell->owner == id) {
-		// printf("Destroying cell '%c'\n", curCell->content);
+		// TRACE("Destroying cell '%c'\n", curCell->content);
 		i++;
 		Tape_cell* nextCell = curCell->prev;
 		free(curCell);
 		curCell = nextCell;
 	}
-	// printf("Destroyed tape with id %d: %d cells\n", id,  i);
+	// TRACE("Destroyed tape with id %d: %d cells\n", id,  i);
 }
 
 /**
@@ -178,10 +186,10 @@ void destroyTape(Tape_cell* cell, uint32_t id)
  */
 void destroyMt(MTListItem* mtItem) {
 	if(mtItem != NULL) {
-		// printf("\nDestroying MT_%d...\n", mtItem->mt.ID);
+		TRACE("\nDestroying MT_%d...\n", mtItem->mt.ID);
 		destroyTape(mtItem->mt.curCell, mtItem->mt.ID);
 		free(mtItem);
-		// printf("Destroyed\n");
+		// TRACE("Destroyed\n");
 	}
 }
 

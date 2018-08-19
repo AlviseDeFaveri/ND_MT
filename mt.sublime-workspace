@@ -4,6 +4,138 @@
 		"selected_items":
 		[
 			[
+				"fou",
+				"foundId"
+			],
+			[
+				"cur",
+				"curCell"
+			],
+			[
+				"cu",
+				"curCell"
+			],
+			[
+				"first",
+				"firstCell"
+			],
+			[
+				"nM",
+				"nMovs"
+			],
+			[
+				"a",
+				"a"
+			],
+			[
+				"next",
+				"nextItem"
+			],
+			[
+				"no",
+				"notNull"
+			],
+			[
+				"accp",
+				"accept"
+			],
+			[
+				"pr",
+				"printf\tprintf …"
+			],
+			[
+				"prev",
+				"prevItem"
+			],
+			[
+				"mt",
+				"mtItem"
+			],
+			[
+				"glo",
+				"globTape"
+			],
+			[
+				"des",
+				"destroyMt"
+			],
+			[
+				"dest",
+				"destroyTape"
+			],
+			[
+				"acc",
+				"accept"
+			],
+			[
+				"tra",
+				"tran"
+			],
+			[
+				"ne",
+				"next"
+			],
+			[
+				"NOT",
+				"NOT_ACCEPT"
+			],
+			[
+				"ot",
+				"originalMt"
+			],
+			[
+				"Tape",
+				"Tape_cell"
+			],
+			[
+				"sea",
+				"searchState"
+			],
+			[
+				"li",
+				"linkedCell"
+			],
+			[
+				"mtl",
+				"mtlist"
+			],
+			[
+				"firs",
+				"firstMt"
+			],
+			[
+				"dump",
+				"tapeDump"
+			],
+			[
+				"un",
+				"uint32_t"
+			],
+			[
+				"n",
+				"nMovs"
+			],
+			[
+				"Tr",
+				"TranList"
+			],
+			[
+				"it",
+				"item"
+			],
+			[
+				"MT",
+				"MTListItem"
+			],
+			[
+				"s",
+				"sizeof"
+			],
+			[
+				"destroy",
+				"destroyMt"
+			],
+			[
 				"tape",
 				"tapeDump"
 			],
@@ -38,22 +170,6 @@
 			[
 				"st",
 				"state"
-			],
-			[
-				"cu",
-				"curCell"
-			],
-			[
-				"n",
-				"next"
-			],
-			[
-				"next",
-				"nextCell"
-			],
-			[
-				"ne",
-				"nextCell"
 			],
 			[
 				"Stat",
@@ -144,28 +260,10 @@
 	"buffers":
 	[
 		{
-			"file": "mt.c",
+			"file": "mtevolve.h",
 			"settings":
 			{
-				"buffer_size": 4387,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "in.txt",
-			"settings":
-			{
-				"buffer_size": 129,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "mtparser.h",
-			"settings":
-			{
-				"buffer_size": 3338,
+				"buffer_size": 10580,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -174,22 +272,57 @@
 			"file": "mttypes.h",
 			"settings":
 			{
-				"buffer_size": 3777,
+				"buffer_size": 3844,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "mtparser.h",
+			"settings":
+			{
+				"buffer_size": 3609,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "README.md",
+			"file": "in.txt",
 			"settings":
 			{
-				"buffer_size": 676,
+				"buffer_size": 191,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "makegdb.bat",
+			"settings":
+			{
+				"buffer_size": 26,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "mt.sublime-project",
+			"settings":
+			{
+				"buffer_size": 695,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "gdbin.gdb",
+			"settings":
+			{
+				"buffer_size": 53,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		}
 	],
-	"build_system": "Packages/User/gcc_api_build.sublime-build",
+	"build_system": "mt",
 	"build_system_choices":
 	[
 		[
@@ -207,15 +340,87 @@
 				"Packages/User/gcc_api_build.sublime-build",
 				""
 			]
+		],
+		[
+			[
+				[
+					"mt",
+					""
+				],
+				[
+					"mt",
+					"notrace"
+				]
+			],
+			[
+				"mt",
+				"notrace"
+			]
+		],
+		[
+			[
+				[
+					"mt",
+					""
+				],
+				[
+					"mt",
+					"notrace"
+				],
+				[
+					"mt",
+					"gdb"
+				]
+			],
+			[
+				"mt",
+				"gdb"
+			]
 		]
 	],
-	"build_varint": "",
+	"build_varint": "gdb",
 	"command_palette":
 	{
 		"height": 392.0,
 		"last_filter": "",
 		"selected_items":
 		[
+			[
+				"gdb",
+				"Set Syntax: GDB Session"
+			],
+			[
+				"su",
+				"SublimeGDB: Stop Debugging"
+			],
+			[
+				"packe",
+				"Package Control: Remove Package"
+			],
+			[
+				"packa",
+				"Package Control: List Packages"
+			],
+			[
+				"clan",
+				"Clang Format: Select Style"
+			],
+			[
+				"package control",
+				"Package Control: List Packages"
+			],
+			[
+				"package control: ins",
+				"Package Control: Install Package"
+			],
+			[
+				"mar",
+				"GitHub Flavored Markdown: Preview"
+			],
+			[
+				"pacakr",
+				"Package Control: Install Package"
+			],
 			[
 				"vmen",
 				"View: Toggle Menu"
@@ -251,13 +456,22 @@
 	],
 	"file_history":
 	[
-		"/C/Users/Elvis/Desktop/uni/API/progetto_2018/README.md",
-		"/C/Users/Elvis/Desktop/uni/API/progetto_2018/in.txt",
-		"/C/Users/Elvis/Desktop/uni/API/progetto_2018/make.bat",
+		"/C/Users/Elvis/Desktop/uni/API/progetto_2018/makegdb.bat",
+		"/c/users/elvis/desktop/uni/api/progetto_2018/mt.c",
+		"/C/Users/Elvis/Desktop/uni/API/progetto_2018/gdbin.txt",
+		"/C/Users/Elvis/Desktop/uni/API/progetto_2018/mt.sublime-project",
+		"/C/Users/Elvis/Desktop/uni/API/progetto_2018/mt.c",
+		"/C/Users/Elvis/AppData/Roaming/Sublime Text 3/Packages/SublimeGDB/SublimeGDB.sublime-settings",
+		"/C/Users/Elvis/Desktop/uni/API/progetto_2018/mtevolve.h",
 		"/C/Users/Elvis/Desktop/uni/API/progetto_2018/mttypes.h",
 		"/C/Users/Elvis/Desktop/uni/API/progetto_2018/mtparser.h",
-		"/C/Users/Elvis/Desktop/uni/API/progetto_2018/mt.c",
-		"/C/Users/Elvis/Desktop/uni/API/progetto_2018/mt.sublime-project",
+		"/C/Users/Elvis/Desktop/uni/API/progetto_2018/SublimeGDB.sublime-settings",
+		"/C/Users/Elvis/AppData/Roaming/Sublime Text 3/Packages/User/SublimeGDB.sublime-settings",
+		"/C/Users/Elvis/Desktop/uni/API/progetto_2018/main2.c",
+		"/C/Users/Elvis/Desktop/uni/API/progetto_2018/make.bat",
+		"/C/Users/Elvis/Desktop/uni/API/progetto_2018/in.txt",
+		"/C/Users/Elvis/Desktop/uni/API/progetto_2018/README.md",
+		"/C/Users/Elvis/Desktop/uni/API/progetto_2018/mt",
 		"/C/Users/Elvis/Desktop/uni/API/progetto_2018/Makefile",
 		"/C/Users/Elvis/Desktop/uni/API/progetto_2018/out.txt",
 		"/C/Users/Elvis/AppData/Roaming/Sublime Text 3/Packages/User/gcc_api_build.sublime-build",
@@ -369,24 +583,20 @@
 		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/libs/miosix-kernel/miosix/arch/common/CMSIS/Documentation/Core/html/jquery.js",
 		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/config/arch/cortexM4_stm32f4/stm32f429zi_stm32f4discovery/board_settings.h",
 		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/libs/miosix-kernel/miosix/config/arch/cortexM4_stm32f4/stm32f429zi_stm32f4discovery/board_settings.h",
-		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/libs/miosix-kernel/miosix/arch/cortexM4_stm32f4/stm32f429zi_stm32f4discovery/interfaces-impl/bsp.cpp",
-		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/shared/boards/homeone/Homeone_config.h",
-		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/libs/mavlink_skyward_lib/mavlink_lib/skyward/mavlink_msg_ping.h",
-		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/shared/drivers/piksi/contiguous_queue.h",
-		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/shared/events/SyncQueue.h",
-		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/libs/miosix-kernel/miosix/arch/cortexM4_stm32f4/stm32f429zi_stm32f4discovery/interfaces-impl/arch_registers_impl.h",
-		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/libs/miosix-kernel/miosix/arch/common/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h",
-		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/entrypoints/dsgamma-config.cpp"
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/libs/miosix-kernel/miosix/arch/cortexM4_stm32f4/stm32f429zi_stm32f4discovery/interfaces-impl/bsp.cpp"
 	],
 	"find":
 	{
-		"height": 40.0
+		"height": 24.0
 	},
 	"find_in_files":
 	{
-		"height": 104.0,
+		"height": 206.0,
 		"where_history":
 		[
+			"C:\\Users\\Elvis\\Desktop\\uni\\API\\progetto_2018",
+			"C:\\Users\\Elvis\\Desktop\\uni\\API\\progetto_2018\\mtevolve.h",
+			""
 		]
 	},
 	"find_state":
@@ -394,6 +604,31 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"is",
+			"gdb",
+			"initMtlist",
+			"printf",
+			"nextItem",
+			"printf",
+			"destroy",
+			"destory",
+			"s",
+			"flag",
+			"nMt",
+			"no transition",
+			"no tran",
+			"no tran\t",
+			"newCell",
+			";\n",
+			"temp",
+			"nMt",
+			"// printf",
+			"printf",
+			"nMt",
+			";\n",
+			"}\n",
+			"glob_ID",
+			"mtlist",
 			"states",
 			"statesù",
 			"states",
@@ -417,6 +652,11 @@
 		"regex": false,
 		"replace_history":
 		[
+			"TRACE",
+			"//printf",
+			"printf",
+			"// printf",
+			"nMt"
 		],
 		"reverse": false,
 		"show_context": true,
@@ -427,53 +667,111 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 5,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "mt.c",
+					"file": "mtevolve.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4387,
+						"buffer_size": 10580,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2056,
-								2056
+								9896,
+								9896
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/C++/C.sublime-syntax",
+							"syntax": "Packages/C++/C++.sublime-syntax",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 650.0,
+						"translation.y": 6194.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "in.txt",
+					"file": "mttypes.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 129,
+						"buffer_size": 3844,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								22,
-								22
+								246,
+								246
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 1843.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "mtparser.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3609,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								19,
+								21
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "in.txt",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 191,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								191
 							]
 						],
 						"settings":
@@ -484,93 +782,96 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "mtparser.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3338,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2462,
-								2462
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 2066.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "mttypes.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3777,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2598,
-								2598
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1824.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
+					"stack_index": 5,
 					"type": "text"
 				},
 				{
 					"buffer": 4,
-					"file": "README.md",
+					"file": "makegdb.bat",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 676,
+						"buffer_size": 26,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
+								26,
 								0
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/Markdown/Markdown.sublime-syntax"
+							"syntax": "Packages/Batch File/Batch File.sublime-syntax"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "mt.sublime-project",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 695,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								413,
+								396
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JSON.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 11.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "gdbin.gdb",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 53,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								53,
+								53
+							]
+						],
+						"settings":
+						{
+							"rulers":
+							[
+								80
+							],
+							"syntax": "Packages/Text/Plain text.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
 					"type": "text"
 				}
 			]
@@ -578,11 +879,11 @@
 	],
 	"incremental_find":
 	{
-		"height": 25.0
+		"height": 24.0
 	},
 	"input":
 	{
-		"height": 49.0
+		"height": 62.0
 	},
 	"layout":
 	{
@@ -609,7 +910,7 @@
 	"menu_visible": true,
 	"output.exec":
 	{
-		"height": 143.0
+		"height": 94.0
 	},
 	"output.find_results":
 	{
@@ -619,7 +920,7 @@
 	"project": "mt.sublime-project",
 	"replace":
 	{
-		"height": 46.0
+		"height": 44.0
 	},
 	"save_all_on_build": true,
 	"select_file":
@@ -642,7 +943,7 @@
 	},
 	"select_symbol":
 	{
-		"height": 345.0,
+		"height": 392.0,
 		"last_filter": "",
 		"selected_items":
 		[
@@ -657,7 +958,7 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 205.0,
+	"side_bar_width": 131.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

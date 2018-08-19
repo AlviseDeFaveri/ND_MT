@@ -31,6 +31,6 @@ int main() {
 		
 		/* Dealloca il nastro */
 		destroyTape(globTape, 0);
-		printf("Tape destroyed\n");
+		TRACE("Tape destroyed\n");
 	}
 }

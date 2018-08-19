@@ -1,5 +1,6 @@
 #include "mttypes.h"
 #include <string.h>
+#include <unistd.h>
 
 #define QUIT_CHAR '\n'
 #define N_STATES 256
@@ -13,22 +14,22 @@ int maxMovs = 0;
  * Search and add in state hashmap
  */
 State* searchState(int id) {
-	// printf("Searching %d\n", id);
+	// TRACE("Searching %d\n", id);
 	// TODO: hashmap search
 	return states[id];
 }
 
 void addState(State* state) {
 	if(state == NULL) {
-		printf("POrCODIO\n");
+		TRACE("POrCODIO\n");
 		return;
 	}
 
 	if(states[state->id] == NULL) {
-		printf("Adding state %d\n", state->id);
+		TRACE("Adding state %d\n", state->id);
 		states[state->id] = state;
 	} else {
-		printf("Not adding state\n");
+		TRACE("Not adding state\n");
 		// TODO: linear probing
 	}
 }
@@ -58,14 +59,14 @@ void parseTranAndStates()
 	if(strcmp(s,"max") != 0) { return; } 
 
 	/* Maximum moves */
-	printf("Max flag found\n");
+	TRACE("Max flag found\n");
 	scanf(" %d", &maxMovs);
 
 	/* Run flag*/
 	scanf(" %s", s);
 	if(strcmp(s,"run") != 0) { return; } 
 
-	printf("Run flag found\n");
+	TRACE("Run flag found\n");
 	while ((flush = getchar()) != '\n' && flush != EOF) { }
 }
 
@@ -77,7 +78,7 @@ void parseTransitions()
 	char flush;
 	enum test_mov mov;
 
-	printf("Transition flag found\n");
+	TRACE("Transition flag found\n");
 
 	/* Flush input buffer */
 	while ((flush = getchar()) != '\n' && flush != EOF) { }
@@ -87,7 +88,7 @@ void parseTransitions()
 		/* Read the whole transition line */
 		scanf(" %c %c %c %d", &in, &out, &mov_char, &state2_id);
 		while ((flush = getchar()) != '\n' && flush != EOF) { }
-		// printf(" %d %c %c %c %d", state1_id, in, out, mov_char, state2_id);
+		// TRACE(" %d %c %c %c %d", state1_id, in, out, mov_char, state2_id);
 
 		/* Search initial state (create new if it doesn't exist) */
 		State* state1 = searchState(state1_id);
@@ -116,7 +117,7 @@ void parseTransitions()
 
 		/* Create transition */
 		addTran(state1, in, out, mov, state2);
-		printf("adding %d, %c, %c, %d, %d\n", state1->id, in, out, mov, state2->id);
+		TRACE("adding %d, %c, %c, %d, %d\n", state1->id, in, out, mov, state2->id);
 	}
 }
 
@@ -125,7 +126,7 @@ void parseAcc()
 {
 	uint32_t id;
 	char flush;
-	printf("Acc flag found\n");
+	TRACE("Acc flag found\n");
 
 	while ((flush = getchar()) != '\n' && flush != EOF) { }
 
