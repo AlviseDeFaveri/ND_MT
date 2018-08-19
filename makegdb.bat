@@ -1,0 +1,1 @@
+gdb --command=gdbin.gdb mt
