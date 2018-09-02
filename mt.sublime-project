@@ -8,8 +8,8 @@
 			"working_dir": "${project_path}",
 			"variants": [
 				{
-					"name": "notrace",
-					"shell_cmd": "gcc -DNOTRACE -o mt mt.c && start make.bat"
+					"name": "trace",
+					"shell_cmd": "gcc -DWITHTRACE -o mt mt.c && start make.bat"
 				},
 				{
 					"name": "gdb",

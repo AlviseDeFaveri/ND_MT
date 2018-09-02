@@ -14,13 +14,13 @@ end
 # Singola evoluzione
 b mtevolve.h:119
 commands 5
-  p mtape(3)
+  p mtape(6)
  end
 
 # Not accept
 #b mtevolve.h:136
 #commands 6
-#  p printf("------NOT ACCEPT------")
+#  p TRACE("------NOT ACCEPT------")
 #  p nMt
 #  p list()
 #  p tapeDump(globTape, 1)

@@ -1,43 +1,37 @@
 #include <stdio.h>
 #include "mttypes.h"
 
-/**
- * Global Variables
- */
-
+/**********************
+ *  Global Variables  *
+ **********************/
 MTListItem* mtlist = NULL;
 uint32_t nMt = 0;
 uint32_t glob_id = 0;
 
-/**
- * Functions
- */
+/**********************
+ *  Function Headers  *
+ **********************/
+void initMtList();
+void cleanMtList();
 
-enum bool_t branchAndEvolve(MT* originalMt, TranListItem* tranList);
+// MTListItem* removeFromList(MTListItem* stopped, enum mt_status status);
+enum mt_status processTape(Tape_cell* tape);
+enum mt_status branch(MT* originalMt, TranListItem* tranList);
 enum mt_status evolve(MT* mt, Transition* tran);
 Tape_cell* moveCell(uint32_t id, Tape_cell* curCell, enum test_mov mov);
 
-/* Inizializza l'hashmap degli stati */
-void initStateHashmap() {
-	//TRACE("STARTED\n");
+void list();
 
-	for(int i = 0; i < N_STATES; i++){
-		states[i] = NULL;
+/*********************
+ *  Function Bodies  *
+ *********************/
+
+/* Crea mtlist con la prima MT*/
+void initMtList() {
+	/* Pulisce mtlist */
+	if(mtlist != NULL) {
+		cleanMtList();
 	}
-}
-
-/* Pulisce mtlist e crea la prima MT*/
-void initMtlist() {
-	/* Dealloca tutte le MT parallele */
-	MTListItem* mtItem = mtlist;
-	MTListItem* next = NULL;
-	while (mtItem != NULL) {
-		next = mtItem->next;
-
-		destroyMt(mtItem);
-		mtItem = next;
-	}
-	//TRACE("Destroyed all MTs\n");
 
 	/* Crea la prima MT */
 	mtlist = newMT(1, maxMovs, globTape, states[0]);
@@ -48,225 +42,233 @@ void initMtlist() {
 	glob_id = 2; // ID del nastro = 0, ID prima MT = 1
 }
 
-/* Rimuove una MT dalla mtlist */
-MTListItem* removeFromList(MTListItem* stopped, enum mt_status status) {
-	if(stopped != NULL) 
-	{
-		nMt--;
-		stopped->mt.result = status;
-		// if(stopped == mtlist) {
-		// 	//TRACE("Replacing (first): MT_%d ",  mtlist->mt.ID);
-		// 	/// //TRACE("---Replacing first MT-----\n\told first: %d\n\t", mtlist->mt.ID);
-		// 	mtlist = stopped->next;
-		// 	//TRACE("with MT_%d\n", (mtlist == NULL) ? -1 : mtlist->mt.ID);
-		// 	destroyMt(stopped);
-		// 	return mtlist;
-		// }
-		// else {
-		// 	assert(prev != NULL);
-		// 	TRACE("Replacing: MT_%d ", stopped->mt.ID);
+/* Pulisce mtlist */
+void cleanMtList() {
+	MTListItem* mtItem = mtlist;
+	MTListItem* next = NULL;
 
-		// 	prev->next = stopped->next;
-		// 	TRACE("with MT_%d\n", (prev->next == NULL) ? -1 : prev->next->mt.ID);
+	/* Dealloca tutte le MT parallele */
+	while (mtItem != NULL) {
+		next = mtItem->next;
 
-		// 	destroyMt(stopped);
-
-		// 	TRACE("Prev= MT_%d, Prev->Next = %d\n", prev->mt.ID, 
-	 // 				(prev->next == NULL) ? -1 : prev->next->mt.ID);
-		// 	return prev;
-		// }
+		destroyMt(mtItem);
+		mtItem = next;
 	}
 }
+
+// /* Rimuove una MT dalla mtlist */
+// void removeFromList(MTListItem* stopped, MTListItem* prev) {
+// 	if(stopped != NULL) 
+// 	{
+// 		if(stopped == mtlist) {
+// 			//TRACE("Replacing (first): MT_%d ",  mtlist->mt.ID);
+// 			/// //TRACE("---Replacing first MT-----\n\told first: %d\n\t", mtlist->mt.ID);
+// 			mtlist = stopped->next;
+// 			//TRACE("with MT_%d\n", (mtlist == NULL) ? -1 : mtlist->mt.ID);
+// 			destroyMt(stopped);
+// 			stopped = mtlist;
+// 		}
+// 		else {
+// 			assert(prev != NULL);
+// 			TRACE("Replacing: MT_%d ", stopped->mt.ID);
+
+// 			prev->next = stopped->next;
+// 			TRACE("with MT_%d\n", (prev->next == NULL)? -1 : prev->next->mt.ID);
+
+// 			destroyMt(stopped);
+// 			stopped = prev->next;
+// 		}
+// 	}
+// }
 
 /**
  * Process tape until acceptance or finish
  */
-enum mt_status processInput(Tape_cell* tape) {
+enum mt_status processTape(Tape_cell* tape) {
 	enum mt_status status = ONGOING;
 	MTListItem* mtItem = mtlist;
+	MTListItem* prevItem = NULL;
 	MTListItem* nextItem = NULL;
 
 	/* Pulisci e riinizializza mtlist */
-	initMtlist();
-	//mtlist->mt.curCell = globTape;
+	initMtList();
+	mtlist->mt.curCell = globTape;
 
-	/* Evolvi tutte le macchine finchè almeno una non accetta o non sono finite */
-	while (status != ACCEPT && nMt > 0) 
+	/* Evolvi tutte le macchine finchè non sono finite */
+	while (nMt > 0) // TODO: perche' non basta nMt?
 	{
-		#ifndef NOTRACE
-			TRACE("\nNuovo giro di MT (tot:%d): ",  nMt);
-
-			MTListItem* a = mtlist;
-			while(a != NULL) 
-			{
-				TRACE("MT_%d  ", a->mt.ID);
-				a = a->next;
-			}
-
-			TRACE("\n");
+		#ifndef WITHTRACE
+			/* Printa tutte le mt */
+			TRACE("\nNuovo giro di MT (tot:%d)\n",  nMt);
+			list();
 		#endif
 
 		mtItem = mtlist;
+		prevItem = NULL;
 
-		/* Per ogni MT */
-		while (mtItem != NULL && mtlist != NULL) 
+		/* Scorri tutte le MT */
+		while (mtItem != NULL) 
 		{
 			MT* mt = &(mtItem->mt);
-			nextItem = mtItem->next;
 
 			TRACE("\nProcessing: %d\n", mt->ID);
 			assert(mt != NULL);
 			assert(mt->curCell != NULL);
 			assert(mt->curState != NULL);
 
-			/* Se e' ferma, saltala */
+			/* Se e' ferma saltala */
 			if(mt->result != ONGOING){
-				mtItem = nextItem;
+				mtItem = mtItem->next;;
+				TRACE("[MT_%d] Already stopped with status %d\n", mt->ID, mt->result);
 				continue;
 			}
 
-			/// TRACE("Processing: %d, state: %d input %c\n", mt->ID, mt->curState->id, mt->curCell->content);
+			// TRACE("Processing: %d, state: %d input %c\n", mt->ID, mt->curState->id, mt->curCell->content);
 
-			/* Leggi e trova la lista di transizioni */
+			/* Leggi dal nastro */
 			char c = mt->curCell->content;
+
+			/* Trova la lista di transizioni */
 			TranListItem* curTran = mt->curState->tranList[(uint8_t)c];
 
-			/* Se non ce n'è neanche una, questa macchina non accetta */
-			if(curTran == NULL) 
-			{
-				///TRACE("Processing MT_%d: no transitions\n", mt->ID);
-				/* Se è l'ultima ritorna 0 */
-				if(nMt <= 1) return NOT_ACCEPT;
-				///TRACE("mtItem %d, prevItem %d\n", mtItem, prevItem);
-				removeFromList(mtItem, NOT_ACCEPT);
+			/* Crea una MT per ogni transizione */
+			status = branch(mt, curTran);
+
+			/* Se accetta esci, se non accetta distruggila */
+			if(status == ACCEPT) {
+				return ACCEPT;
 			}
-			else {
-				/* Crea una MT per ogni ulteriore transizione */
-				enum bool_t accept = branchAndEvolve(mt, curTran->next);
 
-				/* Se almeno una accetta, ritorna true */
-				if(accept == TRUE)
-					return ACCEPT;
-
-				/* Evolvi la prima */
-				status = evolve(mt, &(curTran->tran));
-
-				/* Se accetta esci, se non accetta distruggila */
-				switch(status) 
-				{
-					case ACCEPT: 
-						return ACCEPT;
-						break;
-					case NOT_ACCEPT:
-					case UNDEFINED:
-						if(nMt <= 1) return status;
-						removeFromList(mtItem, status);
-						break;
-				}
-				/// //TRACE("Finished transitions\n");
-			}
-			// prevItem = mtItem;
-			mtItem = nextItem;
-			// TRACE("Next MT: mtItem %d\n", (mtItem == NULL) ? -1 : mtItem->mt.ID);
+			mtItem = mtItem->next;
 		}
-		/// //TRACE("Finished MTs\n");
+		// TRACE("Finished MTs\n");
 	}
+
+	return status; // TODO: o return NOT_ACCEPT?
 }
 
 /* 
  * Crea nuove MT a partire dall'originale leggendo la lista di transizioni,
  * le fa evolvere e aggiorna la mtlist (se non è terminata).
+ *
+ * Ritorna: ACCEPT appena una accetta.
+ *          ONGOING se almeno uno è ongoing.
+ *          UNDEFINED se almeno una ha finito le mosse e nessuna è ongoing.
+ *          NOT_ACCEPT se tutte non accettano.
  */
-enum bool_t branchAndEvolve(MT* originalMt, TranListItem* tranList) {
-	TranListItem* tranItem = tranList;
-
-	/* Nessuna transizione da fare */
-	if(tranList == NULL || originalMt->nMovs == 0) {
-		return FALSE;
+enum mt_status branch(MT* originalMt, TranListItem* tranList) 
+{
+	/* Nessuna transizione: la macchina si ferma */
+	if(tranList == NULL){
+		originalMt->result = NOT_ACCEPT;
+		nMt--;
+		return NOT_ACCEPT;
+	}
+	/* Una sola transizione: evolvi */
+	else if(tranList->next == NULL) {
+		enum mt_status evolveStatus = evolve(originalMt, &(tranList->tran));
+		if(evolveStatus != ONGOING) {
+			nMt--;
+		}
+		return evolveStatus;
 	}
 
-	/* Cicla sulla lista di transizioni */
+	/* Transizioni multiple: stoppa quella corrente */
+	originalMt->result = NOT_ACCEPT;
+	nMt--;
+
+	/* Cicla su tutte le transizioni parallele */
+	TranListItem* tranItem = tranList;
+	enum mt_status retStatus = NOT_ACCEPT;
+
 	while(tranItem != NULL) 
 	{
 		assert(tranItem->tran.nextState != NULL);
 
+		/* Se il prossimo stato accetta, ritorna subito */
 		if(tranItem->tran.nextState->accept == TRUE) {
-			return TRUE;
+			originalMt->result = ACCEPT;
+			return ACCEPT;
 		}
 		else {
 			/* Crea nuova MT */
-			MTListItem* mtItem = newMT(glob_id, originalMt->nMovs, originalMt->curCell,
+			MTListItem* newMt = newMT(glob_id, originalMt->nMovs, originalMt->curCell,
 										originalMt->curState);
 
 			/* Evolvi nuova MT */
-			enum mt_status retStatus = evolve(&(mtItem->mt), &(tranItem->tran));
+			enum mt_status evolveStatus = evolve(&(newMt->mt), &(tranItem->tran));
 
-			/* Se è terminata distruggi senza aggiungere a mtlist */
-			if(retStatus == ACCEPT) {
-				destroyMt(mtItem);
-				return TRUE;
-			}
-			else if(retStatus == ONGOING) {
-				/* Aggiorna primo elemento di mtlist */
-				mtItem->next = mtlist;
-				mtlist = mtItem;
-				nMt++;
-				glob_id++;	
-			}
-			else {
-				destroyMt(mtItem);
+			/* Se non è morta, aggiungila a MTList */
+			switch(evolveStatus) {
+				case ACCEPT:
+					/* Ritorna subito */
+					destroyMt(newMt);
+					return ACCEPT;
+					break;
+				case ONGOING:
+					/* Aggiungila in testa a mtlist */
+					newMt->next = mtlist;
+					mtlist = newMt;
+					/* Aggiorna variabili globali */
+					nMt++;
+					glob_id++;
+					retStatus = ONGOING;
+					break;
+				case UNDEFINED:
+					/* Almeno una è indefinita: eliminala */
+					if(retStatus == NOT_ACCEPT) {
+						retStatus = UNDEFINED;
+					}
+					destroyMt(newMt);
+					break;
+				case NOT_ACCEPT:
+					/* Eliminala subito */
+					destroyMt(newMt);
+					break;
 			}
 		}
 
 		tranItem = tranItem->next;
 	}
 
-	return FALSE;
+	return retStatus;
 }
 
 /**
  * Evolve MT: scrivi carattere, muovi la testina, cambia stato e decrementa il numero di mosse
  */
 enum mt_status evolve(MT* mt, Transition* tran) {
+	TRACE("Evolving MT_%d", mt->ID);
 	assert(mt != NULL);
 	
 	/* Nessuna transizione */
 	if(tran == NULL) {
-		return NOT_ACCEPT;
+		mt->result = NOT_ACCEPT;
 	}
-
 	/* Mosse finite */
-	if (mt->nMovs == 0) {
-		TRACE("---------------------------------------UNDEFINED\n");
-		return UNDEFINED;
+	else if (mt->nMovs == 0) {
+		mt->result = UNDEFINED;
 	}
-
 	/* La transizione accetta */
-	if(tran->nextState->accept == TRUE) {
-		return ACCEPT;
+	else if(tran->nextState->accept == TRUE) {
+		mt->result = ACCEPT;
 	} 
 	/* Evolvi davvero la MT */
 	else {
-		//TRACE("Evolving MT_%d: state %d, reading %c -> state %d\n", mt->ID, mt->curState->id, mt->curCell->content, tran->nextState->id);
+		TRACE("Evolving MT_%d: state %d, reading %c writing %c -> state %d\n", mt->ID, mt->curState->id, mt->curCell->content, tran->output, tran->nextState->id);
 
 		/* Cambia stato */
 		mt->curState = tran->nextState;
 		mt->curCell->content = tran->output;
-		Tape_cell* nextCell = moveCell(mt->ID, mt->curCell, tran->mov);
-		assert(mt->curCell->owner == mt->ID);
+		mt->curCell = moveCell(mt->ID, mt->curCell, tran->mov);
 		assert(mt->curCell != NULL);
-
-		if(tran->mov == L)
-			mt->curCell->prev = nextCell;
-		else if(tran->mov == R)
-			mt->curCell->next = nextCell;
-
-		mt->curCell = nextCell;
-		// //TRACE("moving cell, mt %d new cell %c curState%d\n", mt->ID, mt->curCell->content, mt->curState->id);
+		// TRACE("moving cell, mt %d new cell %c curState%d\n", mt->ID, mt->curCell->content, mt->curState->id);
 
 		mt->nMovs--;
-		return ONGOING;
+		mt->result = ONGOING;
 	}
+
+	return mt->result;
 }
 
 /**
@@ -288,17 +290,19 @@ Tape_cell* moveCell(uint32_t id, Tape_cell* curCell, enum test_mov mov) {
 	/* Se la prossima cella ha un ID diverso o non esiste, crea nuova */
 	if(nextCell == NULL || nextCell->owner != id) {
 		if(mov == L) {
-			nextCell = newCell (id, nextNextCell, curCell, 
-				(nextCell == NULL) ? BLANK : nextCell->content);
+			nextCell = newCell (id, nextNextCell, curCell, (nextCell == NULL) ? BLANK : nextCell->content);
+			curCell->prev = nextCell;
 		}
 		else if(mov == R) {
-			nextCell = newCell (id, curCell, nextNextCell, 
-				(nextCell == NULL) ? BLANK : nextCell->content);
+			nextCell = newCell (id, curCell, nextNextCell, (nextCell == NULL) ? BLANK : nextCell->content);
+			curCell->next = nextCell;
 		}
 	} 
 
 	return nextCell;
 }
+
+/*****************************************************************/
 
 /**
  * Stampa la MT
@@ -364,22 +368,28 @@ void tapeDump(Tape_cell* firstCell, const int dir) {
 		return;
 	}
 
-	printf("\n ");
+	TRACE("\n ");
 	while(curCell != NULL) {
-		printf("___ ");
+		TRACE("____ ");
 		if(dir == 0)
 			break;
 		else if(curCell != NULL)
 			curCell = (dir > 0) ? curCell->next : curCell->prev;
 		else 
-			printf("LA MADONNA E' TROIA\n");
+			TRACE("LA MADONNA E' TROIA\n");
 	}
 
 	curCell = firstCell;
 
-	printf("\n|");
+	TRACE("\n|");
 	while(curCell != NULL) {
-		printf(" %d |", curCell->owner);
+		TRACE(" %d", curCell->owner);
+
+		if(curCell->owner >= 10) {
+			TRACE(" |");
+		} else {
+			TRACE("  |");
+		}
 
 		if(dir == 0)
 			break;
@@ -389,9 +399,9 @@ void tapeDump(Tape_cell* firstCell, const int dir) {
 
 	curCell = firstCell;
 
-	printf("\n|");
+	TRACE("\n|");
 	while(curCell != NULL) {
-		printf(" %c |", curCell->content);
+		TRACE("  %c |", curCell->content);
 
 		if(dir == 0)
 			break;
@@ -401,9 +411,9 @@ void tapeDump(Tape_cell* firstCell, const int dir) {
 
 	curCell = firstCell;
 
-	printf("\n|");
+	TRACE("\n|");
 	while(curCell != NULL) {
-		printf("___|", curCell->content);
+		TRACE("____|", curCell->content);
 
 		if(dir == 0)
 			break;
@@ -411,7 +421,7 @@ void tapeDump(Tape_cell* firstCell, const int dir) {
 			curCell = (dir > 0) ? curCell->next : curCell->prev;
 	}
 
-	printf("\n\n");
+	TRACE("\n\n");
 
 	// TRACE("\tCells {\n");
 
@@ -435,8 +445,8 @@ void list() {
 	TRACE("------------ MTList ---------------\n\n");
 	while(curMt != NULL) {
 		MT* mt = &(curMt->mt);
-		TRACE("MT %d: STATUS%d, STATE Q%d, TAPE \'%c\', nMOVS=%d\n", mt->result,
-				mt->ID, mt->curState->id, mt->curCell->content, mt->nMovs);
+		TRACE("MT %d: STATUS %d, STATE Q%d, TAPE \'%c\', nMOVS=%d\n", mt->ID,
+				mt->result, mt->curState->id, mt->curCell->content, mt->nMovs);
 		curMt = curMt->next;
 	}
 	TRACE("\n-----------------------------------\n");
@@ -457,19 +467,19 @@ void mtape(int id) {
 		Tape_cell* curCell = curMt->mt.curCell;
 
 		if(curCell == NULL) {
-			printf("MT%d has no curcell\n", curMt->mt.ID);
+			TRACE("MT%d has no curcell\n", curMt->mt.ID);
 			return;
 		}
 
-		printf("BEFORE:\n");
+		TRACE("BEFORE:\n");
 		tapeDump(curCell->prev, -1);
-		printf("\nCURRENT:\n");
+		TRACE("\nCURRENT:\n");
 		tapeDump(curCell, 0);
-		printf("\nAFTER:\n");
+		TRACE("\nAFTER:\n");
 		tapeDump(curCell->next, 1);
 
-		TRACE("MT %d: STATUS%d, STATE Q%d, TAPE \'%c\', nMOVS=%d\n\n", mt->result,
-				mt->ID, mt->curState->id, mt->curCell->content, mt->nMovs);
+		TRACE("MT %d: STATUS %d, STATE Q%d, TAPE \'%c\', nMOVS=%d\n\n", mt->ID,
+				mt->result, mt->curState->id, mt->curCell->content, mt->nMovs);
 
 	}
 }
@@ -479,4 +489,4 @@ void mtape(int id) {
 // | 1 | 1 | 2 | 0 |
 // | a | b | c | b |
 // |___|___|___|___|
-//          ^^^
+//    

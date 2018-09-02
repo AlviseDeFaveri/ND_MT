@@ -1,10 +1,10 @@
 #ifndef MTTYPES
 #define MTTYPES
 
-#ifdef NOTRACE
-	#define TRACE(msg, ...) ((void)0)
-#else
+#ifdef WITHTRACE
 	#define TRACE(msg, ...) printf(msg, ##__VA_ARGS__)
+#else
+	#define TRACE(msg, ...) ((void)0)
 #endif
 
 #include <stdint.h>
@@ -13,6 +13,10 @@
 
 #define BLANK '_'
 #define N_TRAN 256
+
+/************************
+ *  Types & Structures  *
+ ************************/
 
 enum bool_t {FALSE, TRUE};
 enum test_mov {S, L, R};
@@ -71,7 +75,9 @@ typedef struct MTListItem
 	MT mt;
 } MTListItem;
 
-/*******************************************************************/
+/********************************
+ *  Constructors & Destructors  *
+ ********************************/
 
 /**
  * Costruttore per gli stati

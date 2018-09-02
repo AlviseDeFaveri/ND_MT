@@ -5,41 +5,34 @@
 #define QUIT_CHAR '\n'
 #define N_STATES 256
 
-/* GLOBAL VARIABLES */
+/**********************
+ *  Global Variables  *
+ **********************/
 State* states[N_STATES];
 Tape_cell* globTape = NULL;
 int maxMovs = 0;
 
-/**
- * Search and add in state hashmap
- */
-State* searchState(int id) {
-	// TRACE("Searching %d\n", id);
-	// TODO: hashmap search
-	return states[id];
-}
+/**********************
+ *  Function Headers  *
+ **********************/
+void parseMT();
+void parseTransitions();
+void parseAcc();
 
-void addState(State* state) {
-	if(state == NULL) {
-		TRACE("POrCODIO\n");
-		return;
-	}
+uint32_t parseTape();
 
-	if(states[state->id] == NULL) {
-		TRACE("Adding state %d\n", state->id);
-		states[state->id] = state;
-	} else {
-		TRACE("Not adding state\n");
-		// TODO: linear probing
-	}
-}
+void initStateHashmap();
+State* searchState(int id);
+void addState(State* state);
+
+/*********************
+ *  Function Bodies  *
+ *********************/
 
 /**
  * Create the MT states and transitions
  */
-void parseTransitions();
-void parseAcc();
-void parseTranAndStates() 
+void parseMT() 
 {
 	char s[3];
 	char flush;
@@ -176,4 +169,37 @@ uint32_t parseTape() {
 	}
 
 	return nChar;
+}
+
+/**
+ *  Inizializza l'hashmap degli stati 
+ */
+void initStateHashmap() {
+	for(int i = 0; i < N_STATES; i++){
+		states[i] = NULL;
+	}
+
+	// TODO: init hashmap
+}
+
+/* Search state in hashmap */
+State* searchState(int id) {
+	// TODO: hashmap search
+	return states[id];
+}
+
+/* Add state to hashmap */
+void addState(State* state) {
+	if(state == NULL) {
+		TRACE("POrCODIO\n");
+		return;
+	}
+
+	if(states[state->id] == NULL) {
+		TRACE("Adding state %d\n", state->id);
+		states[state->id] = state;
+	} else {
+		TRACE("Not adding state\n");
+		// TODO: linear probing
+	}
 }
