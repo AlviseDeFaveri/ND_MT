@@ -20,8 +20,6 @@ enum mt_status branch(MT* originalMt, TranListItem* tranList);
 enum mt_status evolve(MT* mt, Transition* tran);
 Tape_cell* moveCell(uint32_t id, Tape_cell* curCell, enum test_mov mov);
 
-void list();
-
 /*********************
  *  Function Bodies  *
  *********************/
@@ -54,32 +52,9 @@ void cleanMtList() {
 		destroyMt(mtItem);
 		mtItem = next;
 	}
+
+	mtlist = NULL;
 }
-
-// /* Rimuove una MT dalla mtlist */
-// void removeFromList(MTListItem* stopped, MTListItem* prev) {
-// 	if(stopped != NULL) 
-// 	{
-// 		if(stopped == mtlist) {
-// 			//TRACE("Replacing (first): MT_%d ",  mtlist->mt.ID);
-// 			/// //TRACE("---Replacing first MT-----\n\told first: %d\n\t", mtlist->mt.ID);
-// 			mtlist = stopped->next;
-// 			//TRACE("with MT_%d\n", (mtlist == NULL) ? -1 : mtlist->mt.ID);
-// 			destroyMt(stopped);
-// 			stopped = mtlist;
-// 		}
-// 		else {
-// 			assert(prev != NULL);
-// 			TRACE("Replacing: MT_%d ", stopped->mt.ID);
-
-// 			prev->next = stopped->next;
-// 			TRACE("with MT_%d\n", (prev->next == NULL)? -1 : prev->next->mt.ID);
-
-// 			destroyMt(stopped);
-// 			stopped = prev->next;
-// 		}
-// 	}
-// }
 
 /**
  * Process tape until acceptance or finish
@@ -100,7 +75,6 @@ enum mt_status processTape(Tape_cell* tape) {
 		#ifndef WITHTRACE
 			/* Printa tutte le mt */
 			TRACE("\nNuovo giro di MT (tot:%d)\n",  nMt);
-			list();
 		#endif
 
 		mtItem = mtlist;
@@ -118,7 +92,7 @@ enum mt_status processTape(Tape_cell* tape) {
 
 			/* Se e' ferma saltala */
 			if(mt->result != ONGOING){
-				mtItem = mtItem->next;;
+				mtItem = mtItem->next;
 				TRACE("[MT_%d] Already stopped with status %d\n", mt->ID, mt->result);
 				continue;
 			}
@@ -144,7 +118,8 @@ enum mt_status processTape(Tape_cell* tape) {
 		// TRACE("Finished MTs\n");
 	}
 
-	return status; // TODO: o return NOT_ACCEPT?
+	cleanMtList();
+	return status;
 }
 
 /* 
@@ -301,192 +276,3 @@ Tape_cell* moveCell(uint32_t id, Tape_cell* curCell, enum test_mov mov) {
 
 	return nextCell;
 }
-
-/*****************************************************************/
-
-/**
- * Stampa la MT
- */
-void mtDump(MT* mt) {
-
-	TRACE("----------- MT ---------------\n");
-	
-	if (mt == NULL) {
-		TRACE("MT is NULL!\n");
-	} 
-	else {
-		TRACE("MT {\n");
-		TRACE("\tid %d\n", mt->ID);
-
-		State* state = mt->curState;
-		TRACE("\tSTATES {\n");
-
-		for (int i = 0; i < N_TRAN; i++) 
-		{
-
-			if (states[i] == NULL)
-				break;
-
-			state = states[i];
-			TRACE("\n\t\tQ%d", state->id);
-			if(state->accept)
-				TRACE(" (FINAL!)\n");
-			else
-				TRACE("\n");
-
-			TRACE("\t\tTRANSITIONS {\n");
-
-			for (int i = 0; i < N_TRAN; i++) 
-			{
-				if(state->tranList[i] != NULL) {
-					TranListItem* item = state->tranList[i];
-
-					do {
-						TRACE( "\t\t\t%c-> Q%d (%c), mov %d \n", 
-									i, item->tran.nextState->id,
-									item->tran.output, item->tran.mov);
-						item = item->next;
-					} while(item != NULL);
-				}
-			}
-
-			TRACE("\t\t}\n");
-		}
-		TRACE("\t}\n");
-		TRACE("}\n");
-	}
-
-	TRACE("----------------------------\n\n");
-}
-
-void tapeDump(Tape_cell* firstCell, const int dir) {
-
-	Tape_cell* curCell = firstCell;
-
-	if (firstCell == NULL)
-	{
-		return;
-	}
-
-	TRACE("\n ");
-	while(curCell != NULL) {
-		TRACE("____ ");
-		if(dir == 0)
-			break;
-		else if(curCell != NULL)
-			curCell = (dir > 0) ? curCell->next : curCell->prev;
-		else 
-			TRACE("LA MADONNA E' TROIA\n");
-	}
-
-	curCell = firstCell;
-
-	TRACE("\n|");
-	while(curCell != NULL) {
-		TRACE(" %d", curCell->owner);
-
-		if(curCell->owner >= 10) {
-			TRACE(" |");
-		} else {
-			TRACE("  |");
-		}
-
-		if(dir == 0)
-			break;
-		else
-			curCell = (dir > 0) ? curCell->next : curCell->prev;
-	}
-
-	curCell = firstCell;
-
-	TRACE("\n|");
-	while(curCell != NULL) {
-		TRACE("  %c |", curCell->content);
-
-		if(dir == 0)
-			break;
-		else
-			curCell = (dir > 0) ? curCell->next : curCell->prev;
-	}
-
-	curCell = firstCell;
-
-	TRACE("\n|");
-	while(curCell != NULL) {
-		TRACE("____|", curCell->content);
-
-		if(dir == 0)
-			break;
-		else
-			curCell = (dir > 0) ? curCell->next : curCell->prev;
-	}
-
-	TRACE("\n\n");
-
-	// TRACE("\tCells {\n");
-
-	// while(cell != NULL) {
-	// 	TRACE("\t\tCell {\n");
-	// 	TRACE("\t\t\taddress: %x\n", cell);
-	// 	TRACE("\t\t\towner: %d\n", cell->owner);
-	// 	TRACE("\t\t\tcontent: %c\n", cell->content);
-	// 	TRACE("\t\t\tprev: %x\n", cell->prev);
-	// 	TRACE("\t\t\tnext: %x\n", cell->next);
-	// 	TRACE("\t\t}\n");
-	// 	cell = cell->next;
-	// }
-
-	// TRACE("\t}\n");
-}
-
-void list() {
-	MTListItem* curMt = mtlist;
-
-	TRACE("------------ MTList ---------------\n\n");
-	while(curMt != NULL) {
-		MT* mt = &(curMt->mt);
-		TRACE("MT %d: STATUS %d, STATE Q%d, TAPE \'%c\', nMOVS=%d\n", mt->ID,
-				mt->result, mt->curState->id, mt->curCell->content, mt->nMovs);
-		curMt = curMt->next;
-	}
-	TRACE("\n-----------------------------------\n");
-}
-
-void mtape(int id) {
-	MTListItem* curMt = mtlist;
-
-	while(curMt != NULL && curMt->mt.ID != id) {
-		curMt = curMt->next;
-	}
-
-	if (curMt == NULL)
-	{
-		TRACE("ID not found\n");
-	} else {
-		MT* mt = &(curMt->mt);
-		Tape_cell* curCell = curMt->mt.curCell;
-
-		if(curCell == NULL) {
-			TRACE("MT%d has no curcell\n", curMt->mt.ID);
-			return;
-		}
-
-		TRACE("BEFORE:\n");
-		tapeDump(curCell->prev, -1);
-		TRACE("\nCURRENT:\n");
-		tapeDump(curCell, 0);
-		TRACE("\nAFTER:\n");
-		tapeDump(curCell->next, 1);
-
-		TRACE("MT %d: STATUS %d, STATE Q%d, TAPE \'%c\', nMOVS=%d\n\n", mt->ID,
-				mt->result, mt->curState->id, mt->curCell->content, mt->nMovs);
-
-	}
-}
-
-// MT 2: STATE Q1, TAPE 'c', nMOVS=5
-//  ___ ___ ___ ___ 
-// | 1 | 1 | 2 | 0 |
-// | a | b | c | b |
-// |___|___|___|___|
-//    

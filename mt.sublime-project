@@ -4,16 +4,16 @@
 		{
 			"file_regex": "(.+[^:]):(\\d+):(\\d+): (?:fatal )?((?:error|warning): .+)$",
 			"name": "mt",
-			"shell_cmd": "gcc -o mt mt.c && start make.bat",
+			"shell_cmd": "start ubuntu run \"gcc -O2 -Wall -Wextra -o mtapi mt.c && ./mtapi < in.txt & read\"",
 			"working_dir": "${project_path}",
 			"variants": [
 				{
 					"name": "trace",
-					"shell_cmd": "gcc -DWITHTRACE -o mt mt.c && start make.bat"
+					"shell_cmd": "start ubuntu run \"gcc -O2 -Wall -Wextra -o mtapi -DWITHTRACE mt.c && ./mtapi < in.txt & read\""
 				},
 				{
 					"name": "gdb",
-					"shell_cmd": "gcc -g -o mt mt.c && start makegdb.bat"
+					"shell_cmd": "start ubuntu run \"gcc -O2 -Wall -Wextra -o mtapi -ggdb mt.c && gdb --command=gdbin.gdb mtapi\""
 				}
 			]
 		}
