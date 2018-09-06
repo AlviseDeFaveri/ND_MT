@@ -9,7 +9,7 @@
 			"variants": [
 				{
 					"name": "trace",
-					"shell_cmd": "start ubuntu run \"gcc -O2 -Wall -Wextra -o mtapi -DWITHTRACE mt.c && ./mtapi < in.txt & read\""
+					"shell_cmd": "start ubuntu run \"gcc -O2 -Wall -Wextra -o mtapi -DWITHTRACE mt.c && ./mtapi < in.txt | grep 'in use bytes' & read\""
 				},
 				{
 					"name": "gdb",

@@ -156,6 +156,8 @@ MTListItem* newMT(uint32_t ID, uint32_t nMovs, Tape_cell* curCell, State* curSta
 
 	TRACE("Created MT_%d\n", ID);
 
+	malloc_stats();
+
 	return mtItem;
 }
 
