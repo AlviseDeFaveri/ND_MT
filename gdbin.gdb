@@ -1,21 +1,5 @@
 b main
 
-b 715
-b 748
-b 749
-
-commands 2
-  p malloc_stats()
-end
-
-commands 3
-  p malloc_stats()
-end
-
-commands 4
-  p malloc_stats()
-end
-
 # enter and finished processInput()
 #b mt.c:28
 #b mt.c:29
@@ -43,4 +27,3 @@ end
 #end
 
 run
-c

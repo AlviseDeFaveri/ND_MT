@@ -4,12 +4,236 @@
 		"selected_items":
 		[
 			[
-				"N_ST",
-				"N_STATES_INCREASE"
+				"TA",
+				"TAPE_LEN_INC"
+			],
+			[
+				"TAPE_",
+				"INIT_TAPE_DIM"
+			],
+			[
+				"ret",
+				"return"
+			],
+			[
+				"cur",
+				"curMovs"
+			],
+			[
+				"Tra",
+				"Transition"
+			],
+			[
+				"next",
+				"nextState"
+			],
+			[
+				"tran",
+				"tranItem"
+			],
+			[
+				"state",
+				"stateItem"
+			],
+			[
+				"stt",
+				"states"
+			],
+			[
+				"N",
+				"N_STATES"
+			],
+			[
+				"CONN",
+				"CONN_UNDEF"
+			],
+			[
+				"uint",
+				"uint32_t"
+			],
+			[
+				"st",
+				"strlen"
 			],
 			[
 				"max",
-				"maxState"
+				"maxMovs"
+			],
+			[
+				"ta",
+				"tapeCells"
+			],
+			[
+				"status",
+				"statusCount"
+			],
+			[
+				"alloc",
+				"alloc2"
+			],
+			[
+				"fir",
+				"firstState"
+			],
+			[
+				"stat",
+				"state_id"
+			],
+			[
+				"INIT_",
+				"INIT_TAPE_DIM"
+			],
+			[
+				"tape",
+				"tapelen"
+			],
+			[
+				"init",
+				"initTape"
+			],
+			[
+				"malloc",
+				"malloc_stats"
+			],
+			[
+				"No",
+				"NOT_ACCEPT"
+			],
+			[
+				"str",
+				"strcpy"
+			],
+			[
+				"cu",
+				"curCell"
+			],
+			[
+				"mov_",
+				"mov_char"
+			],
+			[
+				"dest",
+				"destroyMt"
+			],
+			[
+				"nM",
+				"nMt"
+			],
+			[
+				"fu",
+				"found"
+			],
+			[
+				"uitn",
+				"uint8_t"
+			],
+			[
+				"mallo",
+				"malloc"
+			],
+			[
+				"det",
+				"destroyMt"
+			],
+			[
+				"m",
+				"mtItem"
+			],
+			[
+				"MtL",
+				"MTListItem"
+			],
+			[
+				"clean",
+				"cleanMtList"
+			],
+			[
+				"strc",
+				"strncpy"
+			],
+			[
+				"MOV",
+				"MOV_R"
+			],
+			[
+				"re",
+				"return"
+			],
+			[
+				"uin",
+				"uint8_t"
+			],
+			[
+				"curSt",
+				"curState"
+			],
+			[
+				"transi",
+				"transitions"
+			],
+			[
+				"new",
+				"newTr"
+			],
+			[
+				"trans",
+				"transitions"
+			],
+			[
+				"Tr",
+				"TranListItem"
+			],
+			[
+				"in",
+				"input"
+			],
+			[
+				"mt",
+				"mt_status"
+			],
+			[
+				"pars",
+				"parseMT"
+			],
+			[
+				"ui",
+				"uint8_t"
+			],
+			[
+				"ne",
+				"nextState"
+			],
+			[
+				"tra",
+				"tranItem"
+			],
+			[
+				"siz",
+				"sizeof"
+			],
+			[
+				"tot",
+				"totCells"
+			],
+			[
+				"firt",
+				"firstState"
+			],
+			[
+				"State",
+				"StateListItem"
+			],
+			[
+				"newTr",
+				"newTran"
+			],
+			[
+				"newTra",
+				"newTranList"
+			],
+			[
+				"N_ST",
+				"N_STATES_INCREASE"
 			],
 			[
 				"S",
@@ -20,32 +244,12 @@
 				"printf\tprintf …"
 			],
 			[
-				"mt",
-				"mt"
-			],
-			[
-				"next",
-				"next"
-			],
-			[
-				"new",
-				"newMt"
-			],
-			[
 				"ev",
 				"evolveStatus"
 			],
 			[
-				"ret",
-				"return"
-			],
-			[
 				"origi",
 				"originalMt"
-			],
-			[
-				"cu",
-				"curState"
 			],
 			[
 				"Evo",
@@ -56,16 +260,8 @@
 				"foundId"
 			],
 			[
-				"cur",
-				"curCell"
-			],
-			[
 				"first",
 				"firstCell"
-			],
-			[
-				"nM",
-				"nMovs"
 			],
 			[
 				"a",
@@ -96,20 +292,8 @@
 				"destroyMt"
 			],
 			[
-				"dest",
-				"destroyTape"
-			],
-			[
 				"acc",
 				"accept"
-			],
-			[
-				"tra",
-				"tran"
-			],
-			[
-				"ne",
-				"next"
 			],
 			[
 				"NOT",
@@ -152,10 +336,6 @@
 				"nMovs"
 			],
 			[
-				"Tr",
-				"TranList"
-			],
-			[
 				"it",
 				"item"
 			],
@@ -172,16 +352,8 @@
 				"destroyMt"
 			],
 			[
-				"tape",
-				"tapeDump"
-			],
-			[
 				"list",
 				"listItem"
-			],
-			[
-				"N",
-				"N_TRAN"
 			],
 			[
 				"mov",
@@ -200,20 +372,8 @@
 				"Tape_cell"
 			],
 			[
-				"tran",
-				"transitions"
-			],
-			[
-				"st",
-				"state"
-			],
-			[
 				"Stat",
 				"Status"
-			],
-			[
-				"siz",
-				"size_t"
 			],
 			[
 				"mavl",
@@ -256,10 +416,6 @@
 				"occupiedSize"
 			],
 			[
-				"str",
-				"structArray"
-			],
-			[
 				"inc",
 				"include"
 			],
@@ -280,10 +436,6 @@
 				"occupiedSize"
 			],
 			[
-				"in",
-				"include"
-			],
-			[
 				"message",
 				"message_t"
 			]
@@ -292,19 +444,10 @@
 	"buffers":
 	[
 		{
-			"file": "mtevolve.h",
+			"file": "in.txt",
 			"settings":
 			{
-				"buffer_size": 6798,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "mtparser.h",
-			"settings":
-			{
-				"buffer_size": 8473,
+				"buffer_size": 674,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -313,7 +456,16 @@
 			"file": "gdbin.gdb",
 			"settings":
 			{
-				"buffer_size": 393,
+				"buffer_size": 338,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "mt.sublime-project",
+			"settings":
+			{
+				"buffer_size": 867,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -322,36 +474,19 @@
 			"file": "mt.c",
 			"settings":
 			{
-				"buffer_size": 16275,
+				"buffer_size": 16344,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
 		},
 		{
-			"file": "main.c",
+			"contents": "#include <stdio.h>\n\n#ifdef WITHTRACE\n\t#define TRACE(msg, ...) printf(msg, ##__VA_ARGS__)\n#else\n\t#define TRACE(msg, ...) ((void)0)\n#endif\n\n#define assert(x) if(!(x)) {printf(\"PORCODIO\\n\"); exit(1);}\n\n#include <stdint.h>\n#include <malloc.h>\n#include <string.h>\n#include <unistd.h>\n#include <stdlib.h>\n\n#define BLANK '_'\n\nint TAPE_LEN_INC = 10;\n\n#define INIT_TAPE_DIM 1000000\n#define N_STATES 100\n#define TAPE_LEN_INC_MAX 0000\n#define TAPE_LEN_INIT 10\n\n/************************\n *  Types & Structures  *\n ************************/\n\n#define FALSE 0\n#define TRUE 1\ntypedef uint8_t bool_t;\n\n#define MOV_S 'S'\n#define MOV_L 'L'\n#define MOV_R 'R'\ntypedef char test_mov;\n\n#define ONGOING 0\n#define ACCEPT 1\n#define NOT_ACCEPT 2\n#define UNDEFINED 3\ntypedef uint8_t mt_status;\n\ntypedef struct __attribute__((packed)) State\n{\n\tstruct TranListItem* tranList; // Lista di transizioni\n\tbool_t accept;\n\tint id;\n\tstruct State* next;\n} State;\n\ntypedef struct __attribute__((packed)) Transition \n{\n\tstruct State* nextState;\n\tchar input;\n\tchar output;\n\ttest_mov mov;\n} Transition;\n\ntypedef struct __attribute__((packed)) TranListItem \n{\n\tstruct TranListItem* next;\n\tstruct Transition tran;\n} TranListItem;\n\ntypedef struct __attribute__((packed)) Tape\n{\n\tchar* cells;\n\t// uint16_t len;\n\tuint32_t cur;\n} Tape;\n\ntypedef struct __attribute__((packed)) MT\n{\n\tTape tape;\n\tstruct State* curState;\n} MT;\n\n\ntypedef struct __attribute__((packed)) MTListItem\n{\n\tstruct MTListItem* next;\n\tMT mt;\n} MTListItem;\n\n\n/**********************\n *  Global Variables  *\n **********************/\nState** states;\n\nbool_t statesOk = 0;\nbool_t accOk = 0;\n\nchar initTape[INIT_TAPE_DIM];\n\nint maxMovs = 0U;\nMTListItem* mtlist = NULL;\nState* firstState = NULL;\nuint32_t nMt = 0U;\n\n\n/********************************\n *  Constructors & Destructors  *\n ********************************/\nState* searchState(const int id);\nState* addState(const int id);\n\n/**\n * Costruttore per gli stati\n */\nState* newState(const int id) \n{\n\tState* state = (State*) malloc(sizeof(State));\n\n\tstate->tranList = NULL;\n\tstate->id = id;\n\tstate->accept = FALSE;\n\tstate->next = NULL;\n\treturn state;\n}\n\n/* Search state in hashmap */\nState* searchState(const int id) {\n\n\tassert(id >= 0);\n\tState* state = states[id%N_STATES];\n\n\twhile(state != NULL) {\n\t\tif(state->id == id) return state;\n\t\tstate = state->next;\n\t}\n\n\treturn NULL;\n}\n\n/* Add state to hashmap */\nState* addState(const int state_id) {\n\tState* state = newState(state_id);\n\n\tstate->next = states[state_id%N_STATES];\n\tstates[state_id%N_STATES] = state;\n\n\tTRACE(\"Adding state %d\\n\", state->id);\n\n\tif(state_id == 0) {\n\t\tfirstState = state;\n\t}\n\n\t//assert(state_id < N_STATES && stateCount < N_STATES);\n\n\treturn state;\n}\n\n/* Costruttore per le transizioni di uno stato */\nvoid addTran(State* state, const char input, const char output,\n\t\t\t\t\tconst test_mov mov, State* nextState) \n{\n\t// assert(state != NULL);\n\t// assert(nextState != NULL);\n\t/* Create transition */\n\tTranListItem* newListItem = (TranListItem*) malloc(sizeof(TranListItem));\n\n\t/* Populate transition */\n\tnewListItem->tran.input \t= input;\n\tnewListItem->tran.output \t= output;\n\tnewListItem->tran.mov \t\t= mov;\n\tnewListItem->tran.nextState = nextState;\n\n\t/* Add transition at the head of the tranList */\n\tnewListItem->next = state->tranList;\n\tstate->tranList = newListItem;\n}\n\n/**\n * Costruttore della MT\n */\nMTListItem* newMT(Tape* tape, State* curState) \n{\n\t/* Crea MT */\n\tMTListItem* mtItem = (MTListItem*) malloc(sizeof(MTListItem));\n\n\t/* Default settings */\n\tmtItem->next = NULL;\n\tmtItem->mt.curState = curState;\n\n\t/* Copy tape */\n\tint len = strlen(tape->cells) ;\n\tassert(len > 0);\n\n\tmtItem->mt.tape.cells = (char*) malloc(len+ 1);\n\tchar* a = strcpy(mtItem->mt.tape.cells, tape->cells);\n\tassert(a != NULL)\n\tmtItem->mt.tape.cur = tape->cur;\n\n\t#ifdef WITHTRACE\n\tmalloc_stats();\n\t#endif\n\n\tTRACE(\"\\nAdded MT %x...\\n\", mtItem);\n\n\treturn mtItem;\n}\n\nMTListItem* reinitMt(MTListItem* mtItem, Tape* tape, State* curState) \n{\n\t/* Crea MT */\n\t//MTListItem* mtItem = (MTListItem*) malloc(sizeof(MTListItem));\n\n\t/* Default settings */\n\tmtItem->mt.curState = curState;\n\n\t/* Copy tape */\n\tint len = strlen(tape->cells) ;\n\tassert(len > 0);\n\n\tfree(mtItem->mt.tape.cells);\n\tmtItem->mt.tape.cells = (char*) malloc(len+ 1);\n\tchar* a = strcpy(mtItem->mt.tape.cells, tape->cells);\n\tassert(a != NULL)\n\tmtItem->mt.tape.cur = tape->cur;\n\n\t#ifdef WITHTRACE\n\tmalloc_stats();\n\t#endif\n\n\tTRACE(\"\\nAdded MT %x...\\n\", mtItem);\n\n\treturn mtItem;\n}\n\n/**\n * Distruttore di MT\n */\nvoid destroyMt(MTListItem* mtItem) {\n\tif(mtItem != NULL) {\n\t\tTRACE(\"\\nDestroying MT %x...\\n\", mtItem);\n\t\tfree(mtItem->mt.tape.cells);\n\t\tfree(mtItem);\n\n\t\tmtItem = NULL;\n\t\t// TRACE(\"Destroyed\\n\");\n\t}\n}\n\n/*************************************************************************************************************\n *                                        P A R S E R                                                        *\n *************************************************************************************************************/\n\n/**********************\n *  Function Headers  *\n **********************/\nvoid parseMT();\nvoid parseTransitions();\nvoid parseAcc();\n\nuint32_t parseTape();\n\n/*********************\n *  Function Bodies  *\n *********************/\n\n/**\n * Create the MT states and transitions\n */\nvoid parseMT() \n{\n\tchar s[4];\n\tchar flush;\n\n\t/* Transition FLAG */\n\tscanf(\"%s\", s);\n\tassert(strcmp(s,\"tr\") == 0);\n\tparseTransitions();\n\n\t/* Accept FLAG */\n\tscanf(\"%s\", s);\n\tassert(strcmp(s,\"acc\") == 0);\n\tparseAcc();\n\n\t/* Max FLAG */\n\tscanf(\"%s\", s);\n\tassert(strcmp(s,\"max\") == 0);\n\n\t/* Maximum moves */\n\tTRACE(\"Max flag found\\n\");\n\tscanf(\"%d\", &maxMovs);\n\tassert(maxMovs > 0);\n\t//assert(maxMovs <= 1000000);\n\n\t// if(maxMovs > 2000000) maxMovs = 200000;\n\n\t/* Run flag*/\n\tscanf(\" %s\", s);\n\tassert(strcmp(s,\"run\") == 0);\n\n\tTRACE(\"Run flag found\\n\");\n\twhile ((flush = getchar()) != '\\n' && flush != EOF) { }\n}\n\n/* Crea stati e transizioni */\nvoid parseTransitions() \n{\n\tchar in, out, mov_char;\n\tint state1_id, state2_id;\n\tchar flush;\n\n\tTRACE(\"Transition flag found\\n\");\n\n\t/* Flush input buffer */\n\twhile ((flush = getchar()) != '\\n' && flush != EOF) { }\n\n\t/* Scan transitions */\n\twhile ( scanf(\"%d\", &state1_id) > 0 ) {\n\t\t/* Read the whole transition line */\n\t\tscanf(\" %c %c %c %d\", &in, &out, &mov_char, &state2_id);\n\t\twhile ((flush = getchar()) != '\\n' && flush != EOF) { }\n\t\t// TRACE(\" %d %c %c %c %d\", state1_id, in, out, mov_char, state2_id);\n\n\t\t/* Search initial state (create new if it doesn't exist) */\n\t\tState* state1 = searchState(state1_id);\n\t\tif(state1 == NULL) {\n\t\t\tstate1 = addState(state1_id);\n\t\t}\n\n\t\t/* Search final state (create new if it doesn't exist) */\n\t\tState* state2 = searchState(state2_id);\n\t\tif(state2 == NULL) {\n\t\t\tstate2 = addState(state2_id);\n\t\t}\n\n\t\t/* Create transition */\n\t\taddTran(state1, in, out, mov_char, state2);\n\t\tTRACE(\"adding %d, %c, %c, %c, %d\\n\", state1->id, in, out, mov_char, state2->id);\n\t\tstatesOk = TRUE;\n\t}\n\n\tassert(statesOk);\n}\n\n/* Assegna lo stato di accettazione */\nvoid parseAcc() \n{\n\tint id;\n\tchar flush;\n\tTRACE(\"Acc flag found\\n\");\n\n\twhile ((flush = getchar()) != '\\n' && flush != EOF) { }\n\n\twhile(scanf(\"%d\", &id) > 0) \n\t{\n\t\tState* state = searchState(id);\n\n\t\tassert(state!= NULL)\n\t\tstate->accept = TRUE;\n\n\t\tchar flush;\n\t\twhile ((flush = getchar()) != '\\n' && flush != EOF) { }\n\t\taccOk = TRUE;\n\t}\n\n\tassert(accOk);\n}\n\n/*******************************************************************************************\n *                          E V O L V E R                                                  *\n *******************************************************************************************/\n\n/**********************\n *  Function Headers  *\n **********************/\n// MTListItem* removeFromList(MTListItem* stopped, enum mt_status status);\nmt_status process();\nmt_status branch(MTListItem* originalMt, const char c);\nmt_status evolve(MT* mt, Transition* tran);\nvoid move(MT* mt, const test_mov mov);\n\n/*********************\n *  Function Bodies  *\n *********************/\n\n/* Pulisce mtlist */\nvoid cleanMtList() {\n\tMTListItem* mtItem = mtlist;\n\tMTListItem* next = NULL;\n\n\t/* Dealloca tutte le MT parallele */\n\twhile (mtItem != NULL) {\n\t\tnext = mtItem->next;\n\n\t\tdestroyMt(mtItem);\n\t\tmtItem = next;\n\t}\n\n\tmtlist = NULL;\n}\n\n/* Crea mtlist con la prima MT*/\nvoid initMtList(char* tapeCells) {\n\t/* Pulisce mtlist */\n\tif(mtlist != NULL) {\n\t\t//cleanMtList();\n\t}\n\n\t/* Crea la prima MT */\n\tassert(firstState != NULL);\n\tassert(tapeCells != NULL);\n\n\tTape tape;\n\ttape.cells = tapeCells;\n\ttape.cur = 0;\n\n\t// if(mtlist != NULL) {\n\t\tmtlist = newMT(&tape, firstState);\n\t// } else {\n\t// \tmtlist = reinitMt(mtlist, &tape, firstState);\n\t// }\n\n\tnMt = 1;\n}\n\nvoid addToMtList(MTListItem* mtItem) {\n\tmtItem->next = mtlist;\n\tmtlist = mtItem;\n\t++nMt;\n}\n\nMTListItem* removeFromList(MTListItem* mtItem, MTListItem* prev) {\n\tassert(nMt > 0);\n\t--nMt;\n\tif(mtItem == mtlist) {\n\t\tmtlist = mtlist->next;\n\t\tdestroyMt(mtItem);\n\t\treturn mtlist;\n\t}\n\telse {\n\t\t// assert(prev != NULL);\n\t\tMTListItem* next = mtItem->next;\n\t\tprev->next = next;\n\t\tdestroyMt(mtItem);\n\t\treturn next;\n\t}\n}\n\nvoid cleanStateList() {\n\tState* stateItem = states;\n\tState* next = NULL;\n\n\t/* Dealloca tutte le MT parallele */\n\twhile (stateItem != NULL) {\n\t\tnext = stateItem->next;\n\n\t\tTranListItem* tran = stateItem->tranList;\n\t\tTranListItem* nextTran = NULL;\n\n\t\twhile(tran != NULL) {\n\t\t\tnextTran = tran->next;\n\t\t\tfree(tran);\n\t\t\ttran = nextTran;\n\t\t}\n\n\t\tfree(stateItem);\n\t\tstateItem = next;\n\t}\n}\n\n/**\n * Process tape until acceptance or finish\n */\nmt_status process() {\n\tmt_status status = ONGOING;\n\tMTListItem* mtItem = mtlist;\n\tMTListItem* prev = NULL;\n\tint nMovs = maxMovs;\n\n\t/* Evolvi tutte le macchine finchè non sono finite */\n\twhile (nMt > 0 && nMovs > 0)\n\t{\n\t\t#ifndef WITHTRACE\n\t\t\t/* Printa tutte le mt */\n\t\t\tTRACE(\"\\nNuovo giro di MT (tot:%d)\\n\",  nMt);\n\t\t#endif\n\n\t\tmtItem = mtlist;\n\n\t\t/* Scorri tutte le MT */\n\t\twhile (mtItem != NULL) \n\t\t{\n\t\t\tTRACE(\"\\nProcessing MT %x\\n\", mtItem);\n\t\t\t// assert(mtItem->mt.curState != NULL);\n\n\t\t\t// TRACE(\"Processing: %d, state: %d input %c\\n\", mt->ID, mt->curState->id, mt->curCell->content);\n\n\t\t\t/* Leggi dal nastro */\n\t\t\tchar c = mtItem->mt.tape.cells[mtItem->mt.tape.cur];\n\t\t\tassert(c != '\\0' && c != '\\n' && c != ' ');\n\n\t\t\t/* Crea una MT per ogni transizione */\n\t\t\tstatus = branch(mtItem, c);\n\n\t\t\t/* Se accetta esci */\n\t\t\tswitch(status) {\n\t\t\t\tcase ACCEPT:\n\t\t\t\t\treturn ACCEPT;\n\t\t\t\t\tbreak;\n\t\t\t\tcase NOT_ACCEPT:\n\t\t\t\t\tmtItem = removeFromList(mtItem, prev);\n\t\t\t\t\tif(nMt == 0) return NOT_ACCEPT;\n\t\t\t\t\tbreak;\n\t\t\t\tcase ONGOING:\n\t\t\t\t\tprev = mtItem;\n\t\t\t\t\tmtItem = mtItem->next;\n\t\t\t\t\tbreak;\n\t\t\t}\n\t\t\t\n\t\t}\n\n\t\t--nMovs;\n\t\tif(nMovs == 0 && nMt > 0) \n\t\t\tstatus = UNDEFINED;\n\n\t\tTRACE(\"nMovs %d status %d\\n\", nMovs, status);\n\n\t\t// TRACE(\"Finished MTs\\n\");\n\t}\n\n\tcleanMtList();\n\treturn status;\n}\n\n/* \n * Crea nuove MT a partire dall'originale leggendo la lista di transizioni,\n * le fa evolvere e aggiorna la mtlist (se non è terminata).\n *\n * Ritorna: ACCEPT appena una accetta.\n *          ONGOING se almeno uno è ongoing.\n *          UNDEFINED se almeno una ha finito le mosse e nessuna è ongoing.\n *          NOT_ACCEPT se tutte non accettano.\n */\nmt_status branch(MTListItem* originalMt, const char c) \n{\n\tTranListItem* tranItem = originalMt->mt.curState->tranList;\n\tTranListItem* firstTran = NULL;\n\tuint8_t found = 0;\n\tmt_status retStatus = NOT_ACCEPT;\n\n\twhile(tranItem != NULL) \n\t{\n\t\t/* Transizione trovata */\n\t\tif(tranItem->tran.input == c) \n\t\t{\n\t\t\t/* Salva la prima */\n\t\t\tif(found == 0) {\n\t\t\t\tfirstTran = tranItem;\n\t\t\t} \n\t\t\t/* Evolvi le successive\t */\n\t\t\telse {\n\t\t\t\t/* Crea nuova MT */\n\t\t\t\tMTListItem* newMt = newMT(&(originalMt->mt.tape), originalMt->mt.curState);\n\n\t\t\t\t/* Evolvi nuova MT */\n\t\t\t\tmt_status evolveStatus = evolve(&(newMt->mt), &(tranItem->tran));\n\n\t\t\t\t/* Se non è morta, aggiungila a MTList */\n\t\t\t\tswitch(evolveStatus) {\n\t\t\t\t\tcase ACCEPT:\n\t\t\t\t\t\t/* Ritorna subito */\n\t\t\t\t\t\tdestroyMt(newMt);\n\t\t\t\t\t\treturn ACCEPT;\n\t\t\t\t\t\tbreak;\n\t\t\t\t\tcase ONGOING:\n\t\t\t\t\t\t/* Aggiungila in testa a mtlist */\n\t\t\t\t\t\taddToMtList(newMt);\n\t\t\t\t\t\t// retStatus = ONGOING;\n\t\t\t\t\t\tbreak;\n\t\t\t\t\tdefault:\n\t\t\t\t\t\t/* Eliminala subito */\n\t\t\t\t\t\tdestroyMt(newMt);\n\t\t\t\t\t\tbreak;\n\t\t\t\t}\n\n\t\t\t}\n\n\t\t\t++found;\n\t\t}\n\n\t\ttranItem = tranItem->next;\n\t}\n\n\t/* Evolvi la prima */\n\tif(found > 0) {\n\t\tmt_status evolveStatus = evolve(&(originalMt->mt), &(firstTran->tran));\n\n\t\tswitch(evolveStatus) {\n\t\t\tcase ACCEPT:\n\t\t\t\t/* Ritorna subito */\n\t\t\t\treturn ACCEPT;\n\t\t\t\tbreak;\n\t\t\tcase NOT_ACCEPT:\n\t\t\tcase UNDEFINED:\n\t\t\t\t/* Segnala da scartare */\n\t\t\t\toriginalMt->mt.curState = NULL;\n\t\t\t\tretStatus = NOT_ACCEPT;\n\t\t\t\tbreak;\n\t\t\tcase ONGOING:\n\t\t\t\tretStatus = ONGOING;\n\t\t\t\tbreak;\n\t\t}\n\t}\n\n\treturn retStatus;\n}\n\n/**\n * Evolve MT: scrivi carattere, muovi la testina, cambia stato e decrementa il numero di mosse\n */\nmt_status evolve(MT* mt, Transition* tran) {\n\t// assert(mt != NULL);\n\t// assert(tran != NULL);\n\t\n\t/* La transizione accetta */\n\tif(tran->nextState->accept == TRUE) {\n\t\treturn ACCEPT;\n\t} \n\t/* Evolvi davvero la MT */\n\telse {\n\t\tTRACE( \t\"Evolving MT: state %d, reading %c writing %c -> state %d\\n\",\n\t\t\t\tmt->curState->id, mt->tape.cells[mt->tape.cur],\n\t\t\t\ttran->output, tran->nextState->id );\n\n\t\t/* Cambia stato */\n\t\tmt->curState = tran->nextState;\n\t\t/* Cambia il nastro */\n\t\tmt->tape.cells[mt->tape.cur] = tran->output;\n\t\tmove(mt, tran->mov);\n\n\t\t// printf(\"Evolving MT 0x%x\\n\", mt);\n\t\t// printf(\"%s\\n\", mt->tape.cells);\n\n\t\t// for(int i = 0; i < mt->tape.cur; i++){\n\t\t// \tprintf(\" \");\n\t\t// }\n\t\t// printf(\"@\\n\");\n\n\t\treturn ONGOING;\n\t}\n\t\n}\n\n/**\n * Muove la MT alla prossima cella (creando la cella se ce n'è bisogno)\n */\nvoid move(MT* mt, const test_mov mov) {\n\t/* Prossima cella */\n\tif (mov == MOV_R) \n\t{\n\t\t/* Incrementa */\n\t\tmt->tape.cur++;\n\t\tuint32_t len = strlen(mt->tape.cells);\n\t\t// assert(len > 0);\n\t\t/* Realloc tape */\n\t\tif(mt->tape.cur >= len) {\n\t\t\tmt->tape.cells = (char*) realloc(mt->tape.cells, len + TAPE_LEN_INC + 1);\n\n\t\t\tassert(mt->tape.cells[len] == '\\0');\n\t\t\tassert(mt->tape.cells!=NULL);\n\n\t\t\tchar* a = strcat(mt->tape.cells, TAPE_INC_CONTENT);\n\n\t\t\tassert(a != NULL);\n\t\t\tassert(mt->tape.cells[len + TAPE_LEN_INC] == '\\0');\n\t\t\tassert(mt->tape.cells!=NULL);\n\n\t\t\t//printf(\"Realloc dopo (R) %s \\n\", mt->tape.cells);\n\t\t}\n\t} \n\telse if (mov == MOV_L) {\n\t\t/* Realloc tape */\n\t\tif(mt->tape.cur == 0) {\n\t\t\tint len = strlen(mt->tape.cells);\n\t\t\t// assert(len > 0);\n\n\t\t\tmt->tape.cells = (char*) realloc(mt->tape.cells, len + TAPE_LEN_INC + 1);\n\t\t\tmemmove( mt->tape.cells + TAPE_LEN_INC, mt->tape.cells, len + 1);\n\n\t\t\tassert(mt->tape.cells[len + TAPE_LEN_INC] == '\\0');\n\t\t\tassert(mt->tape.cells!=NULL);\n\n\t\t    for (int i = 0; i < TAPE_LEN_INC; ++i)\n\t\t    {\n\t\t        mt->tape.cells[i] = BLANK;\n\t\t    }\n\n\t\t\tTRACE(\"Realloc dopo (L) %s \\n\", mt->tape.cells);\n\n\t\t\t// printf(\"Realloc prima %s\\n\", mt->tape.cells);\n\t\t\t// strcpy(mt->tape.cells + mt->tape.cur, temp);\n\t\t\t// printf(\"Realloc dopo %s \\n\", mt->tape.cells);\n\t\t\tmt->tape.cur = TAPE_LEN_INC;\n\t\t}\n\n\t\t/* Decrementa */\n\t\tmt->tape.cur--;\n\t}\n}\n\n\n/*******************************************************************************************\n *                              M A I N                                                    *\n *******************************************************************************************/\n\n/**\n * Main\n */\nint main() {\n\tmt_status status = ONGOING;\n\n\t/* Parsa stati e transizioni */\n\tstates = calloc(N_STATES, sizeof(State*));\n\tassert(states[0] == NULL);\n\tparseMT();\n\n\t/* Cicla sugli input */\n\twhile(1) {\n\n\t\t/* Parsa il nastro */\n\t\tint tape = scanf(\" %s\", initTape);\n\t\t//int tape = fgets(initTape, INIT_TAPE_DIM, stdin);\n\t\tif (tape <= 0) break;\n\n\t\t//initTape[0] = BLANK;\n\t\tassert(strlen(initTape) > 0);\n\n\t\t//char* a = strcat(initTape, \"_\");\n\t\t//assert(a != NULL)\n\n\t\t/* Pulisci e riinizializza mtlist */\n\t\tinitMtList(initTape);\n\n\t\t/* Processa l'input */\n\t\tstatus = process();\n\n\t\t//cleanMtList();\n\n\t\tswitch(status){\n\t\t\tcase ACCEPT:\n\t\t\t\tprintf(\"1\\n\");\n\t\t\t\tbreak;\n\t\t\tcase UNDEFINED:\n\t\t\t\tprintf(\"U\\n\");\n\t\t\t\tbreak;\n\t\t\tdefault:\n\t\t\t\tprintf(\"0\\n\");\n\t\t\t\tbreak;\n\t\t}\n\n\t}\n \n\t// cleanMtList();\n\t// cleanStateList();\n}",
+			"file": "tutorial.c",
+			"file_size": 17132,
+			"file_write_time": 131811024867055980,
 			"settings":
 			{
-				"buffer_size": 16275,
-				"encoding": "UTF-8",
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"file": "mttypes.h",
-			"settings":
-			{
-				"buffer_size": 4013,
-				"line_ending": "Windows"
-			}
-		},
-		{
-			"contents": "tr\n0 a a S 1\n0 a a S 13\n1 x x R 1\n1 a x R 2\n2 a a R 3\n2 b b R 8\n3 a a R 3\n3 b b R 4\n4 b b R 4\n4 c c R 5\n5 y y R 5\n5 c c R 5\n5 x x R 5\n5 _ x L 6\n6 y y L 6\n6 x x L 6\n6 c y L 7\n7 c c L 7\n7 y y L 7\n7 b b L 7\n7 x x L 7\n7 a a L 7\n7 _ x R 1\n8 b b R 8\n8 c y R 9\n9 y y R 10\n10 y y R 10\n10 x x S 11\n9 c c R 12\n13 a x R 14\n13 x x R 13\n13 y y R 20\n13 b b R 21\n14 a a R 14\n14 b b R 15\n15 b b R 15\n15 c c R 16\n16 c c R 16\n16 x x R 16\n16 _ x L 17\n17 c c L 17\n17 x x L 17\n17 y y L 18\n18 y y L 18\n18 b y L 19\n19 b b L 19\n19 a a L 19\n19 x x L 19\n19 _ x R 13\n20 y y R 20\n20 c c R 20\n20 x x S 22\n15 y y R 15\n17 b y L 19\nacc\n11\n22\nmax\n4000\nrun\naabbcc\naabbccc\naaabbc\naabbbbcc\naabcc\naabbcccccc\naaaaaabbccccc\naaaaabbbbbc\naaabbbccccccccc\nabbbccccc\naaabbbbcc\n\n1\n1\n0\n1\n1\n1\n0\n1\n1\n0\n0\n",
-			"file": "in.txt",
-			"file_size": 803,
-			"file_write_time": 131804061935499994,
-			"settings":
-			{
-				"buffer_size": 756,
+				"buffer_size": 16050,
 				"encoding": "UTF-8",
 				"line_ending": "Windows"
 			}
@@ -511,22 +646,26 @@
 	],
 	"file_history":
 	[
+		"/C/Users/Elvis/Desktop/uni/API/progetto_2018/tutorial.c",
+		"/C/Users/Elvis/Desktop/uni/API/progetto_2018/in.txt",
+		"/C/Users/Elvis/Desktop/uni/API/progetto_2018/mtapi",
+		"/C/Users/Elvis/Desktop/uni/API/progetto_2018/mttypes.h",
 		"/C/Users/Elvis/Desktop/uni/API/progetto_2018/gdbin.gdb",
 		"/C/Users/Elvis/Desktop/uni/API/progetto_2018/mt.sublime-project",
-		"/C/Users/Elvis/Desktop/uni/API/progetto_2018/mtevolve2.h",
-		"/C/Users/Elvis/Desktop/uni/API/progetto_2018/mttypes.h",
-		"/C/Users/Elvis/Desktop/uni/API/progetto_2018/makegdb.bat",
 		"/C/Users/Elvis/Desktop/uni/API/progetto_2018/mtevolve.h",
+		"/C/Users/Elvis/Desktop/uni/API/progetto_2018/mtparser.h",
+		"/C/Users/Elvis/Desktop/uni/API/progetto_2018/mtOld.c",
+		"/C/Users/Elvis/Desktop/uni/API/progetto_2018/main.c",
+		"/C/Users/Elvis/Desktop/uni/API/progetto_2018/mtevolve2.h",
+		"/C/Users/Elvis/Desktop/uni/API/progetto_2018/makegdb.bat",
 		"/c/users/elvis/desktop/uni/api/progetto_2018/mt.c",
 		"/C/Users/Elvis/Desktop/uni/API/progetto_2018/gdbin.txt",
 		"/C/Users/Elvis/Desktop/uni/API/progetto_2018/mt.c",
 		"/C/Users/Elvis/AppData/Roaming/Sublime Text 3/Packages/SublimeGDB/SublimeGDB.sublime-settings",
-		"/C/Users/Elvis/Desktop/uni/API/progetto_2018/mtparser.h",
 		"/C/Users/Elvis/Desktop/uni/API/progetto_2018/SublimeGDB.sublime-settings",
 		"/C/Users/Elvis/AppData/Roaming/Sublime Text 3/Packages/User/SublimeGDB.sublime-settings",
 		"/C/Users/Elvis/Desktop/uni/API/progetto_2018/main2.c",
 		"/C/Users/Elvis/Desktop/uni/API/progetto_2018/make.bat",
-		"/C/Users/Elvis/Desktop/uni/API/progetto_2018/in.txt",
 		"/C/Users/Elvis/Desktop/uni/API/progetto_2018/README.md",
 		"/C/Users/Elvis/Desktop/uni/API/progetto_2018/mt",
 		"/C/Users/Elvis/Desktop/uni/API/progetto_2018/Makefile",
@@ -634,11 +773,7 @@
 		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/shared/Singleton.h",
 		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/src/shared/boards/homeone/TMTC/CircularBuffer.h",
 		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/libs/mavlink_skyward_lib/mavlink_lib/skyward/mavlink_msg_test_msg.h",
-		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/libs/mavlink_skyward_lib/mavlink_lib/mavlink_types.h",
-		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/libs/mavlink_skyward_lib/mavlink_lib/protocol.h",
-		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/libs/mavlink_skyward_lib/mavlink_lib/skyward/mavlink.h",
-		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/libs/miosix-kernel/miosix/arch/common/CMSIS/Documentation/Core/html/jquery.js",
-		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/config/arch/cortexM4_stm32f4/stm32f429zi_stm32f4discovery/board_settings.h"
+		"/C/Users/Elvis/Desktop/SKWRD/skyward-boardcore/libs/mavlink_skyward_lib/mavlink_lib/mavlink_types.h"
 	],
 	"find":
 	{
@@ -649,6 +784,8 @@
 		"height": 206.0,
 		"where_history":
 		[
+			"<open files>",
+			"C:\\Users\\Elvis\\Desktop\\uni\\API\\progetto_2018,<open files>",
 			"C:\\Users\\Elvis\\Desktop\\uni\\API\\progetto_2018",
 			"C:\\Users\\Elvis\\Desktop\\uni\\API\\progetto_2018\\mtevolve.h",
 			""
@@ -659,6 +796,99 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"cleanMtList",
+			"mtlist",
+			"mtli",
+			"TAPE_LEN_INC_MAX",
+			"TAPE_LEN_INC",
+			"printf",
+			"TAPE_LEN_INC",
+			"tapeleninc",
+			"newMT",
+			"maxMovs",
+			"maxmovs",
+			"maxMovs",
+			"maxmovs",
+			"cleanMtList",
+			"initMtList",
+			"tranList",
+			"reinitMt",
+			"firstState",
+			"TranListItem",
+			"UNDEFINED",
+			"searchState",
+			"maxMovs",
+			"uint16",
+			"cur",
+			"newMt",
+			"reinitMt",
+			"maxMovs",
+			"nMt",
+			"uint16_t",
+			"strc",
+			"str",
+			"strcat",
+			"error",
+			"TAPE_LEN_INC",
+			"states",
+			"newMT",
+			"initMtList",
+			"cleanMtList",
+			"assert",
+			"initMtList",
+			"assert",
+			"initMtList",
+			"exit",
+			"calloc",
+			"malloc",
+			"printf",
+			"realloc",
+			"scanf",
+			"parseMT",
+			"assert",
+			"strlen",
+			"uint32_t",
+			"uint16_t",
+			"TRACE",
+			"TRACE+",
+			"MT",
+			"searchState",
+			"State",
+			"states",
+			"State",
+			"parseMT",
+			"globTape",
+			"realloc",
+			"parseMT",
+			"printf",
+			"removeFromList",
+			"\");\n",
+			"uint8_t",
+			"addState",
+			"addTran",
+			"globTape",
+			"trace",
+			"}\n",
+			"newMT",
+			"addState",
+			"TRACE",
+			"strn",
+			"strc",
+			"newTran",
+			"}",
+			"const char",
+			"processTape",
+			"enum",
+			"processTape",
+			"initState",
+			"states",
+			"malloc",
+			"tranlist",
+			"destroyMt",
+			"destroyTape",
+			"destroyMt",
+			"destroyTape",
+			"ùdestroyTape",
 			"include",
 			"#include",
 			"initStateHashmap",
@@ -693,30 +923,7 @@
 			"newCell",
 			";\n",
 			"temp",
-			"nMt",
-			"// printf",
-			"printf",
-			"nMt",
-			";\n",
-			"}\n",
-			"glob_ID",
-			"mtlist",
-			"states",
-			"statesù",
-			"states",
-			"newTran",
-			"tra",
-			"findTran",
-			"UNIIT",
-			"UNI",
-			"UN",
-			"UNINIT",
-			"UNINI",
-			"UNINT",
-			"transitions",
-			"UNINIT",
-			"prin",
-			"/"
+			"nMt"
 		],
 		"highlight": false,
 		"in_selection": false,
@@ -724,6 +931,8 @@
 		"regex": false,
 		"replace_history":
 		[
+			"// assert",
+			"// TRACE",
 			"TRACE",
 			"//printf",
 			"printf",
@@ -739,83 +948,52 @@
 	"groups":
 	[
 		{
-			"selected": 6,
+			"selected": 4,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "mtevolve.h",
+					"file": "in.txt",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 6798,
+						"buffer_size": 674,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								40,
-								6798
+								577,
+								577
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/C++/C++.sublime-syntax",
-							"translate_tabs_to_spaces": false,
-							"word_wrap": false
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
-						"translation.y": 3550.0,
+						"translation.y": 480.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 4,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "mtparser.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 8473,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4108,
-								4108
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 2584.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
 					"file": "gdbin.gdb",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 393,
+						"buffer_size": 338,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								24,
-								24
+								338,
+								338
 							]
 						],
 						"settings":
@@ -826,7 +1004,36 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 6,
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "mt.sublime-project",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 867,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								194,
+								194
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JSON.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
@@ -835,110 +1042,52 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 16275,
+						"buffer_size": 16344,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								16275
+								13506,
+								15179
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/C++/C.sublime-syntax",
-							"translate_tabs_to_spaces": false
+							"syntax": "Packages/C++/C.sublime-syntax"
 						},
 						"translation.x": 0.0,
-						"translation.y": 2708.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "main.c",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 16275,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								7624,
-								7624
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 5535.0,
+						"translation.y": 9585.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
-					"file": "mttypes.h",
+					"buffer": 4,
+					"file": "tutorial.c",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4013,
+						"buffer_size": 16050,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								4013
+								419,
+								419
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/C++/C++.sublime-syntax",
+							"syntax": "Packages/C++/C.sublime-syntax",
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "in.txt",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 756,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								756,
-								756
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 1066.0,
+						"translation.y": 54.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 0,
@@ -980,7 +1129,7 @@
 	"menu_visible": true,
 	"output.exec":
 	{
-		"height": 94.0
+		"height": 78.0
 	},
 	"output.find_results":
 	{
@@ -1028,7 +1177,7 @@
 	"show_open_files": true,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 152.0,
+	"side_bar_width": 184.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
