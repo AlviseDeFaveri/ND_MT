@@ -4,7 +4,7 @@
 		{
 			"file_regex": "(.+[^:]):(\\d+):(\\d+): (?:fatal )?((?:error|warning): .+)$",
 			"name": "mt",
-			"shell_cmd": " start ubuntu run \"gcc -O2 -Wall -Wextra -o mtapi mt.c && ./mtapi < in.txt & read\"",
+			"shell_cmd": " start ubuntu run \"gcc -O2 -Wall -Wextra -ggdb -o mtapi mt.c && ./mtapi < in.txt & read\"",
 			"working_dir": "${project_path}",
 			"variants": [
 				{

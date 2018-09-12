@@ -2,11 +2,11 @@
 
 #ifdef WITHTRACE
 	#define TRACE(msg, ...) printf(msg, ##__VA_ARGS__)
+	#define assert(x) if(!(x)) {printf("PORCODIO\n"); exit(1);}
 #else
 	#define TRACE(msg, ...) ((void)0)
+	#define assert(x) 
 #endif
-
-#define assert(x) if(!(x)) {printf("PORCODIO\n"); exit(1);}
 
 #include <stdint.h>
 #include <malloc.h>
@@ -17,9 +17,12 @@
 #define BLANK '_'
 
 #define INIT_TAPE_DIM 1000000
-#define N_STATES 10
-#define TAPE_LEN_INC_MAX 1000
+#define N_STATES 13
+#define TAPE_LEN_INC_MAX 200000
 #define TAPE_LEN_INIT 10
+#define TAPE_LEN_SCALE 5
+#define MTLIST_INIT_DIM 10
+
 int TAPE_LEN_INC = 0U;
 
 /************************
@@ -46,7 +49,7 @@ typedef struct __attribute__((packed)) State
 	struct TranListItem* tranList; // Lista di transizioni
 	bool_t accept;
 	int id;
-	struct State* next;
+	struct State* next;  // Bucket
 } State;
 
 typedef struct __attribute__((packed)) Transition 
@@ -66,7 +69,6 @@ typedef struct __attribute__((packed)) TranListItem
 typedef struct __attribute__((packed)) Tape
 {
 	char* cells;
-	// uint16_t len;
 	uint32_t cur;
 } Tape;
 
@@ -74,43 +76,48 @@ typedef struct __attribute__((packed)) MT
 {
 	Tape tape;
 	struct State* curState;
+	int input;
 } MT;
-
-
-typedef struct __attribute__((packed)) MTListItem
-{
-	struct MTListItem* next;
-	MT mt;
-} MTListItem;
 
 
 /**********************
  *  Global Variables  *
  **********************/
 State** states;
+State* firstState = NULL;
+
+char initTape[INIT_TAPE_DIM];
+int maxMovs = 0U;
 
 bool_t statesOk = 0;
 bool_t accOk = 0;
 
-char initTape[INIT_TAPE_DIM];
+MT* mtlist = NULL;
+int mtlistDim = MTLIST_INIT_DIM;
+int curInput = 1;
 
-int maxMovs = 0U;
-MTListItem* mtlist = NULL;
-State* firstState = NULL;
 uint32_t nMt = 0U;
+bool_t dioc1 = FALSE, dioc2 = FALSE;
 
 
 /********************************
  *  Constructors & Destructors  *
  ********************************/
-State* newState(const int id);
+State* newState(const int id) ;
 State* searchState(const int id);
-State* addState(const int id);
+State* addToStateList(const int id);
+void cleanStateList();
+
+int newMT(const int i, Tape* tape, State* curState);
+void destroyMt(const int i) ;
+
+void initMtList(char* tapeCells);
+void addToMtList(const int i);
+void removeFromMtList(const int i);
+void cleanMtList();
 
 void addTran(State* state, const char input, const char output,
 					const test_mov mov, State* nextState);
-
-MTListItem* newMT(Tape* tape, State* curState) 
 
 /**
  * Costruttore per gli stati
@@ -141,7 +148,7 @@ State* searchState(const int id) {
 }
 
 /* Add state to hashmap */
-State* addState(const int state_id) {
+State* addToStateList(const int state_id) {
 	State* state = newState(state_id);
 
 	state->next = states[state_id%N_STATES];
@@ -156,6 +163,28 @@ State* addState(const int state_id) {
 	//assert(state_id < N_STATES && stateCount < N_STATES);
 
 	return state;
+}
+
+void cleanStateList() {
+	// State* stateItem = states;
+	// State* next = NULL;
+
+	// /* Dealloca tutte le MT parallele */
+	// while (stateItem != NULL) {
+	// 	next = stateItem->next;
+
+	// 	TranListItem* tran = stateItem->tranList;
+	// 	TranListItem* nextTran = NULL;
+
+	// 	while(tran != NULL) {
+	// 		nextTran = tran->next;
+	// 		free(tran);
+	// 		tran = nextTran;
+	// 	}
+
+	// 	free(stateItem);
+	// 	stateItem = next;
+	// }
 }
 
 /* Costruttore per le transizioni di uno stato */
@@ -181,45 +210,112 @@ void addTran(State* state, const char input, const char output,
 /**
  * Costruttore della MT
  */
-MTListItem* newMT(Tape* tape, State* curState) 
+int newMT(const int refIndex, Tape* refTape, State* curState) 
 {
-	/* Crea MT */
-	MTListItem* mtItem = (MTListItem*) malloc(sizeof(MTListItem));
+	MT* mt = NULL;
+	int retIndex = -1;
 
-	/* Default settings */
-	mtItem->next = NULL;
-	mtItem->mt.curState = curState;
-
-	/* Copy tape */
-	int len = strlen(tape->cells) ;
+	int len = strlen(refTape->cells);
 	assert(len > 0);
+	assert(curInput > 0);
 
-	mtItem->mt.tape.cells = (char*) malloc(len+ 1);
-	char* a = strcpy(mtItem->mt.tape.cells, tape->cells);
+	/* Cercane una libera */
+	for(int i = 0; i < mtlistDim; ++i) {
+		if (mtlist[i].input != curInput) {
+			mt = &(mtlist[i]);
+			retIndex = i;
+
+			free(mt->tape.cells);
+			TRACE("Found free MT_%d\n", i);
+			break;
+		}
+	}
+
+	/* Se non c'è allarga la mtlist e metti tutti gli input a 0 */
+	if(retIndex == -1) {
+		TRACE("Free MT not found\n");
+		mtlist = (MT*) realloc(mtlist, sizeof(MT) * (mtlistDim*2 ));
+		assert(mtlist != NULL);
+
+		for(int i = mtlistDim; i < mtlistDim*2; ++i) {
+			TRACE("%d\n", i);
+			mtlist[i].input = 0;
+		}
+
+		mt = (MT*) &(mtlist[mtlistDim]);
+		retIndex = mtlistDim;
+		mtlistDim *= 2;
+
+		if(refIndex >= 0) {
+			refTape = &(mtlist[refIndex]);
+		}
+	}
+
+
+	mt->tape.cells = (char*) malloc(len+ 1);
+
+	assert(mt != NULL);
+	mt->curState = curState;
+	mt->input = curInput;
+	mt->tape.cur = refTape->cur;
+
+	/* Copia il nastro */
+	char* a = strcpy(mt->tape.cells, refTape->cells);
 	assert(a != NULL)
-	mtItem->mt.tape.cur = tape->cur;
 
 	#ifdef WITHTRACE
-	malloc_stats();
+	//malloc_stats();
 	#endif
 
-	TRACE("\nAdded MT %x...\n", mtItem);
+	TRACE("\nAdded MT_%d...\n", retIndex);
 
-	return mtItem;
+	return retIndex;
 }
 
 /**
  * Distruttore di MT
  */
-void destroyMt(MTListItem* mtItem) {
-	if(mtItem != NULL) {
-		TRACE("\nDestroying MT %x...\n", mtItem);
-		free(mtItem->mt.tape.cells);
-		free(mtItem);
+void destroyMt(const int mtIndex) {
+	assert(mtIndex < mtlistDim);
+	mtlist[mtIndex].input = 0;
+}
 
-		mtItem = NULL;
-		// TRACE("Destroyed\n");
-	}
+/* Crea mtlist con la prima MT*/
+void initMtList(char* tapeCells) {
+
+	/* Crea il nastro */
+	assert(firstState != NULL);
+	assert(tapeCells != NULL);
+	Tape tape;
+	tape.cells = tapeCells;
+	tape.cur = 1;
+
+	/* Crea la prima MT */
+	TRACE("Creating first MT...\n");
+	mtlist[0].input = -1;
+	newMT(-1, &tape, firstState);
+	assert(mtlist[0].input == curInput);
+	TRACE("Created first MT\n");
+
+	nMt = 1;
+}
+
+void addToMtList(const int i) {
+	assert(i >= 0 && i < mtlistDim);
+	++nMt;
+}
+
+void removeFromMtList(const int i) {
+	TRACE("removing i=%d\n", i);
+	assert(i >= 0 && i < mtlistDim);
+	destroyMt(i);
+	if(nMt > 0)
+		--nMt;
+}
+
+/* Pulisce mtlist */
+void cleanMtList() {
+	curInput++;
 }
 
 /*************************************************************************************************************
@@ -232,8 +328,6 @@ void destroyMt(MTListItem* mtItem) {
 void parseMT();
 void parseTransitions();
 void parseAcc();
-
-uint32_t parseTape();
 
 /*********************
  *  Function Bodies  *
@@ -299,13 +393,13 @@ void parseTransitions()
 		/* Search initial state (create new if it doesn't exist) */
 		State* state1 = searchState(state1_id);
 		if(state1 == NULL) {
-			state1 = addState(state1_id);
+			state1 = addToStateList(state1_id);
 		}
 
 		/* Search final state (create new if it doesn't exist) */
 		State* state2 = searchState(state2_id);
 		if(state2 == NULL) {
-			state2 = addState(state2_id);
+			state2 = addToStateList(state2_id);
 		}
 
 		/* Create transition */
@@ -350,106 +444,19 @@ void parseAcc()
  **********************/
 // MTListItem* removeFromList(MTListItem* stopped, enum mt_status status);
 mt_status process();
-mt_status branch(MTListItem* originalMt, const char c);
-mt_status evolve(MT* mt, Transition* tran);
-void move(MT* mt, const test_mov mov);
+mt_status branch(const int i, const char c);
+mt_status evolve(const int i, Transition* tran);
+void move(const int i, const test_mov mov);
 
 /*********************
  *  Function Bodies  *
  *********************/
-
-/* Pulisce mtlist */
-void cleanMtList() {
-	MTListItem* mtItem = mtlist;
-	MTListItem* next = NULL;
-
-	/* Dealloca tutte le MT parallele */
-	while (mtItem != NULL) {
-		next = mtItem->next;
-
-		destroyMt(mtItem);
-		mtItem = next;
-	}
-
-	mtlist = NULL;
-}
-
-/* Crea mtlist con la prima MT*/
-void initMtList(char* tapeCells) {
-	/* Pulisce mtlist */
-	if(mtlist != NULL) {
-		//cleanMtList();
-	}
-
-	/* Crea la prima MT */
-	assert(firstState != NULL);
-	assert(tapeCells != NULL);
-
-	Tape tape;
-	tape.cells = tapeCells;
-	tape.cur = 1;
-
-	// if(mtlist != NULL) {
-		mtlist = newMT(&tape, firstState);
-	// } else {
-	// 	mtlist = reinitMt(mtlist, &tape, firstState);
-	// }
-
-	nMt = 1;
-}
-
-void addToMtList(MTListItem* mtItem) {
-	mtItem->next = mtlist;
-	mtlist = mtItem;
-	++nMt;
-}
-
-MTListItem* removeFromList(MTListItem* mtItem, MTListItem* prev) {
-	assert(nMt > 0);
-	--nMt;
-	if(mtItem == mtlist) {
-		mtlist = mtlist->next;
-		destroyMt(mtItem);
-		return mtlist;
-	}
-	else {
-		// assert(prev != NULL);
-		MTListItem* next = mtItem->next;
-		prev->next = next;
-		destroyMt(mtItem);
-		return next;
-	}
-}
-
-void cleanStateList() {
-	State* stateItem = states;
-	State* next = NULL;
-
-	/* Dealloca tutte le MT parallele */
-	while (stateItem != NULL) {
-		next = stateItem->next;
-
-		TranListItem* tran = stateItem->tranList;
-		TranListItem* nextTran = NULL;
-
-		while(tran != NULL) {
-			nextTran = tran->next;
-			free(tran);
-			tran = nextTran;
-		}
-
-		free(stateItem);
-		stateItem = next;
-	}
-}
 
 /**
  * Process tape until acceptance or finish
  */
 mt_status process() {
 	mt_status status = ONGOING;
-	MTListItem* mtItem = mtlist;
-	MTListItem* prev = NULL;
 	int nMovs = maxMovs;
 
 	/* Evolvi tutte le macchine finchè non sono finite */
@@ -460,22 +467,28 @@ mt_status process() {
 			TRACE("\nNuovo giro di MT (tot:%d)\n",  nMt);
 		#endif
 
-		mtItem = mtlist;
 
+		int initNMT = nMt;
+		int count = 0;
 		/* Scorri tutte le MT */
-		while (mtItem != NULL) 
+		for (int i = 0; i < mtlistDim; i++) 
 		{
-			TRACE("\nProcessing MT %x\n", mtItem);
-			// assert(mtItem->mt.curState != NULL);
+			if(mtlist[i].input != curInput)
+				continue;
+			TRACE("\nProcessing MT_%d\n", i);
+			count++;
+			if(count >= initNMT + 1) {
+				break;
+			}
 
 			// TRACE("Processing: %d, state: %d input %c\n", mt->ID, mt->curState->id, mt->curCell->content);
 
 			/* Leggi dal nastro */
-			char c = mtItem->mt.tape.cells[mtItem->mt.tape.cur];
+			char c = mtlist[i].tape.cells[mtlist[i].tape.cur];
 			assert(c != '\0' && c != '\n' && c != ' ');
 
 			/* Crea una MT per ogni transizione */
-			status = branch(mtItem, c);
+			status = branch(i, c);
 
 			/* Se accetta esci */
 			switch(status) {
@@ -483,17 +496,17 @@ mt_status process() {
 					return ACCEPT;
 					break;
 				case NOT_ACCEPT:
-					mtItem = removeFromList(mtItem, prev);
+					removeFromMtList(i);
 					if(nMt == 0) return NOT_ACCEPT;
 					break;
-				case ONGOING:
-					prev = mtItem;
-					mtItem = mtItem->next;
+				default:
 					break;
 			}
 			
 		}
 
+		dioc1 = FALSE;
+		dioc2 = FALSE;
 		--nMovs;
 		if(nMovs == 0 && nMt > 0) 
 			status = UNDEFINED;
@@ -516,9 +529,9 @@ mt_status process() {
  *          UNDEFINED se almeno una ha finito le mosse e nessuna è ongoing.
  *          NOT_ACCEPT se tutte non accettano.
  */
-mt_status branch(MTListItem* originalMt, const char c) 
+mt_status branch(const int mtIndex, const char c) 
 {
-	TranListItem* tranItem = originalMt->mt.curState->tranList;
+	TranListItem* tranItem = mtlist[mtIndex].curState->tranList;
 	TranListItem* firstTran = NULL;
 	uint8_t found = 0;
 	mt_status retStatus = NOT_ACCEPT;
@@ -530,31 +543,40 @@ mt_status branch(MTListItem* originalMt, const char c)
 		{
 			/* Salva la prima */
 			if(found == 0) {
+				TRACE("FOUND FIRST\n");
 				firstTran = tranItem;
+				TRACE("TAPE:%s\n", mtlist[mtIndex].tape.cells);
 			} 
 			/* Evolvi le successive	 */
 			else {
 				/* Crea nuova MT */
-				MTListItem* newMt = newMT(&(originalMt->mt.tape), originalMt->mt.curState);
+				TRACE("FOUND NEXT\n");
+				int i = newMT(mtIndex, &(mtlist[mtIndex].tape), mtlist[mtIndex].curState);
 
 				/* Evolvi nuova MT */
-				mt_status evolveStatus = evolve(&(newMt->mt), &(tranItem->tran));
+				mt_status evolveStatus = evolve(i, &(tranItem->tran));
 
 				/* Se non è morta, aggiungila a MTList */
 				switch(evolveStatus) {
 					case ACCEPT:
 						/* Ritorna subito */
-						destroyMt(newMt);
+						TRACE("ACCEPT\n");
+						destroyMt(i);
+						TRACE("ACCEPT\n");
 						return ACCEPT;
 						break;
 					case ONGOING:
 						/* Aggiungila in testa a mtlist */
-						addToMtList(newMt);
+						TRACE("ONGOING\n");
+						addToMtList(i);
+						TRACE("ONGOING\n");
 						// retStatus = ONGOING;
 						break;
 					default:
 						/* Eliminala subito */
-						destroyMt(newMt);
+						TRACE("DESTROY\n");
+						destroyMt(i);
+						TRACE("DESTROY\n");
 						break;
 				}
 
@@ -568,7 +590,10 @@ mt_status branch(MTListItem* originalMt, const char c)
 
 	/* Evolvi la prima */
 	if(found > 0) {
-		mt_status evolveStatus = evolve(&(originalMt->mt), &(firstTran->tran));
+		TRACE("EVOLVING FIRST %d...\n", mtIndex);
+		TRACE("TAPE:%s\n", mtlist[mtIndex].tape.cells);
+		mt_status evolveStatus = evolve(mtIndex, &(firstTran->tran));
+		TRACE("EVOLVED FIRST\n");
 
 		switch(evolveStatus) {
 			case ACCEPT:
@@ -578,7 +603,7 @@ mt_status branch(MTListItem* originalMt, const char c)
 			case NOT_ACCEPT:
 			case UNDEFINED:
 				/* Segnala da scartare */
-				originalMt->mt.curState = NULL;
+				mtlist[mtIndex].curState = NULL;
 				retStatus = NOT_ACCEPT;
 				break;
 			case ONGOING:
@@ -593,9 +618,9 @@ mt_status branch(MTListItem* originalMt, const char c)
 /**
  * Evolve MT: scrivi carattere, muovi la testina, cambia stato e decrementa il numero di mosse
  */
-mt_status evolve(MT* mt, Transition* tran) {
-	// assert(mt != NULL);
-	// assert(tran != NULL);
+mt_status evolve(const int i, Transition* tran) {
+	assert(i < mtlistDim && i >= 0);
+	assert(tran != NULL);
 	
 	/* La transizione accetta */
 	if(tran->nextState->accept == TRUE) {
@@ -603,15 +628,26 @@ mt_status evolve(MT* mt, Transition* tran) {
 	} 
 	/* Evolvi davvero la MT */
 	else {
-		TRACE( 	"Evolving MT: state %d, reading %c writing %c -> state %d\n",
-				mt->curState->id, mt->tape.cells[mt->tape.cur],
-				tran->output, tran->nextState->id );
+		TRACE("Evolving --- MT_%d... in%d curin%d\n", i, mtlist[i].input, curInput);
+		TRACE("%s\n", mtlist[i].tape.cells);
+		TRACE("Input %d...\n", mtlist[i].tape.cells[mtlist[i].tape.cur]);
+		TRACE("CurState %d...\n", mtlist[i].curState->id);
+		TRACE("Output %d...\n", tran->output);
+		TRACE("NextState %d...\n",  tran->nextState->id);
+		assert(mtlist[i].curState != NULL);
+		assert(mtlist[i].tape.cells[mtlist[i].tape.cur] != '\n');
+
+		// TRACE( 	"Evolving MT_%d: state %d, reading %c writing %c -> state %d\n", i,
+		// 		mtlist[i].curState->id, 'c'/*mtlist[i].tape.cells[mtlist[i].tape.cur]*/,
+		// 		tran->output, tran->nextState->id );
 
 		/* Cambia stato */
-		mt->curState = tran->nextState;
+		mtlist[i].curState = tran->nextState;
 		/* Cambia il nastro */
-		mt->tape.cells[mt->tape.cur] = tran->output;
-		move(mt, tran->mov);
+		mtlist[i].tape.cells[mtlist[i].tape.cur] = tran->output;
+		TRACE("Moving...\n");
+		move(i, tran->mov);
+		TRACE("Evolved!\n");
 
 		// printf("Evolving MT 0x%x\n", mt);
 		// printf("%s\n", mt->tape.cells);
@@ -629,66 +665,67 @@ mt_status evolve(MT* mt, Transition* tran) {
 /**
  * Muove la MT alla prossima cella (creando la cella se ce n'è bisogno)
  */
-void move(MT* mt, const test_mov mov) {
+void move(const int i, const test_mov mov) {
 	/* Prossima cella */
 	if (mov == MOV_R) 
 	{
 		/* Incrementa */
-		mt->tape.cur++;
-		uint32_t len = strlen(mt->tape.cells);
-		// assert(len > 0);
+		mtlist[i].tape.cur++;
+		uint32_t len = strlen(mtlist[i].tape.cells);
+		assert(len > 0);
 		/* Realloc tape */
-		if(mt->tape.cur >= len) {
-			mt->tape.cells = (char*) realloc(mt->tape.cells, len + TAPE_LEN_INC + 1);
+		if(mtlist[i].tape.cur >= len) {
+			mtlist[i].tape.cells = (char*) realloc(mtlist[i].tape.cells, len + TAPE_LEN_INC + 1);
 
-			assert(mt->tape.cells[len] == '\0');
-			assert(mt->tape.cells!=NULL);
+			assert(mtlist[i].tape.cells[len] == '\0');
+			assert(mtlist[i].tape.cells!=NULL);
 
-			//char* a = strcat(mt->tape.cells, TAPE_INC_CONTENT);
-			for (int i = 0; i < TAPE_LEN_INC; ++i)
+			// char* a = strcat(mt->tape.cells, TAPE_INC_CONTENT);
+			for (int j = 0; j < TAPE_LEN_INC; ++j)
 		    {
-		        mt->tape.cells[len + i] = BLANK;
+		        mtlist[i].tape.cells[len + j] = BLANK;
 		    }
 
 			// assert(a != NULL);
-			mt->tape.cells[len + TAPE_LEN_INC] = '\0';
-			assert(mt->tape.cells!=NULL);
+			mtlist[i].tape.cells[len + TAPE_LEN_INC] = '\0';
+			assert(mtlist[i].tape.cells!=NULL);
 
-			if(TAPE_LEN_INC < TAPE_LEN_INC_MAX){
-				TAPE_LEN_INC *= 5;
+			TRACE("Realloc dopo (R) %s \n", mtlist[i].tape.cells);
+			if(TAPE_LEN_INC < TAPE_LEN_INC_MAX && dioc1 == FALSE){
+				TAPE_LEN_INC *= TAPE_LEN_SCALE;
+				dioc1 = TRUE;
 			}
-
-			//printf("Realloc dopo (R) %s \n", mt->tape.cells);
 		}
 	} 
 	else if (mov == MOV_L) {
 		/* Realloc tape */
-		if(mt->tape.cur == 0) {
-			int len = strlen(mt->tape.cells);
-			// assert(len > 0);
+		if(mtlist[i].tape.cur == 0) {
+			int len = strlen(mtlist[i].tape.cells);
+			assert(len > 0);
 
-			mt->tape.cells = (char*) realloc(mt->tape.cells, len + TAPE_LEN_INC + 1);
-			memmove( mt->tape.cells + TAPE_LEN_INC, mt->tape.cells, len + 1);
+			mtlist[i].tape.cells = (char*) realloc(mtlist[i].tape.cells, len + TAPE_LEN_INC + 1);
+			memmove( mtlist[i].tape.cells + TAPE_LEN_INC, mtlist[i].tape.cells, len + 1);
 
-			assert(mt->tape.cells[len + TAPE_LEN_INC] == '\0');
-			assert(mt->tape.cells!=NULL);
+			assert(mtlist[i].tape.cells[len + TAPE_LEN_INC] == '\0');
+			assert(mtlist[i].tape.cells!=NULL);
 
-		    for (int i = 0; i < TAPE_LEN_INC; ++i)
+		    for (int j = 0; j < TAPE_LEN_INC; ++j)
 		    {
-		        mt->tape.cells[i] = BLANK;
+		        mtlist[i].tape.cells[j] = BLANK;
 		    }
 
-			TRACE("Realloc dopo (L) %s \n", mt->tape.cells);
+			TRACE("Realloc dopo (L) %s \n", mtlist[i].tape.cells);
 
-			mt->tape.cur = TAPE_LEN_INC;
+			mtlist[i].tape.cur = TAPE_LEN_INC;
 
-			if(TAPE_LEN_INC < TAPE_LEN_INC_MAX){
-				TAPE_LEN_INC *= 5;
+			if(TAPE_LEN_INC < TAPE_LEN_INC_MAX && dioc2 == FALSE){
+				TAPE_LEN_INC *= TAPE_LEN_SCALE;
+				dioc2 = TRUE;
 			}
 		}
 
 		/* Decrementa */
-		mt->tape.cur--;
+		mtlist[i].tape.cur--;
 	}
 }
 
@@ -701,36 +738,45 @@ void move(MT* mt, const test_mov mov) {
  * Main
  */
 int main() {
-	mt_status status = ONGOING;
-
-	/* Parsa stati e transizioni */
+	/* Inizializzazione*/
 	states = calloc(N_STATES, sizeof(State*));
 	assert(states[0] == NULL);
+
+	mtlistDim = MTLIST_INIT_DIM;
+	curInput = 1;
+	mtlist = calloc(mtlistDim, sizeof(MT));
+	assert(mtlist != NULL);
+	// for(int i = 0; i < mtlistDim; ++i){
+	// 	mtlist[i].input = 0;
+	// }
+
+	/* Parsa stati e transizioni */
 	parseMT();
 
 	/* Cicla sugli input */
+	mt_status status = ONGOING;
 	while(1) {
+
 		TAPE_LEN_INC = TAPE_LEN_INIT;
 
 		/* Parsa il nastro */
 		int tape = scanf(" %s", initTape + 1);
-		//int tape = fgets(initTape, INIT_TAPE_DIM, stdin);
 		if (tape <= 0) break;
+		//assert(strlen(initTape) > 0);
 
 		initTape[0] = BLANK;
-		assert(strlen(initTape) > 0);
-
 		char* a = strcat(initTape, "_");
-		assert(a != NULL)
 
 		/* Pulisci e riinizializza mtlist */
+		TRACE("Inizializzo mtlist...\n");
 		initMtList(initTape);
+		TRACE("Inizializzata mtlist");
 
 		/* Processa l'input */
 		status = process();
 
-		// if(maxMovs> 1000000 && nMt < 100)
-		 	//cleanMtList();
+		//if(maxMovs> 1000000 && nMt < 100)
+		cleanMtList();
 
 		switch(status){
 			case ACCEPT:
